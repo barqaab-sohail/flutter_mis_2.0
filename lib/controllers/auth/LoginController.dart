@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:first_project/utils/api/BaseAPI.dart';
+import 'package:first_project/views/auth/LoginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:first_project/modal/UserModal.dart';
+import 'package:first_project/views/dashboard/Dashboard.dart';
 
 class LoginController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
@@ -86,7 +88,7 @@ class LoginController extends GetxController {
 
         emailController.clear();
         passwordController.clear();
-
+        Get.to(DashBoardScreen());
         //Get.off(HomeScreen());
       } else {
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
@@ -103,5 +105,20 @@ class LoginController extends GetxController {
             );
           });
     }
+  }
+
+  static Future<bool> isLogin() async {
+    var any = await SharedPreferences.getInstance();
+    if (any.getString('token')!.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  static logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    Get.off(() => LoginScreen());
   }
 }
