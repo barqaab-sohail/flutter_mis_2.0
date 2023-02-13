@@ -75,9 +75,14 @@ class LoginController extends GetxController {
           await http.post(url, body: jsonEncode(body), headers: headers);
       final json = jsonDecode(response.body);
       if (json['status'] == 200) {
-        var token = json['data']['Token'];
+        UserModal loginUser = UserModal.fromJson(json);
         final SharedPreferences? prefs = await _prefs;
-        await prefs?.setString('token', token);
+        await prefs?.setString('token', loginUser.token.toString());
+        await prefs?.setString('userName', loginUser.userName.toString());
+        await prefs?.setString(
+            'userDesignation', loginUser.userDesignation.toString());
+        await prefs?.setString('email', loginUser.email.toString());
+        await prefs?.setString('pictureUrl', loginUser.pictureUrl.toString());
 
         emailController.clear();
         passwordController.clear();
