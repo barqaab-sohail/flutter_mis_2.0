@@ -19,6 +19,9 @@ class LoginController extends GetxController {
   var email = '';
   var password = '';
 
+  var loginDesignation = '';
+  var loginPicture = '';
+
   @override
   void onInit() {
     super.onInit();
@@ -51,13 +54,13 @@ class LoginController extends GetxController {
     return null;
   }
 
-  void checkLogin() {
-    final isValid = loginFormKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
-    loginFormKey.currentState!.save();
-  }
+  // void checkLogin() {
+  //   final isValid = loginFormKey.currentState!.validate();
+  //   if (!isValid) {
+  //     return;
+  //   }
+  //   loginFormKey.currentState!.save();
+  // }
 
   Future<void> loginWithEmail() async {
     final isValid = loginFormKey.currentState!.validate();
@@ -107,9 +110,16 @@ class LoginController extends GetxController {
     }
   }
 
+  getStringValuesSF() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Return String
+    String stringValue = prefs.getString('userName').toString();
+    return stringValue;
+  }
+
   static Future<bool> isLogin() async {
     var any = await SharedPreferences.getInstance();
-    if (any.getString('token')!.isEmpty) {
+    if (any.getString('token') == null) {
       return false;
     } else {
       return true;

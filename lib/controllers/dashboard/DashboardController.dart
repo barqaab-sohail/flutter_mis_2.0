@@ -7,7 +7,7 @@ class DashboardController extends GetxController {
   var picture = '';
   var userDesignation = '';
 
-  getUser() async {
+  static getUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userName = await prefs.getString('userName').toString();
     return userName;
