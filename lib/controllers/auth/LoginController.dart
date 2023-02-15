@@ -10,7 +10,7 @@ import 'package:first_project/modal/UserModal.dart';
 import 'package:first_project/views/dashboard/Dashboard.dart';
 
 class LoginController extends GetxController {
-  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  //GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   late TextEditingController emailController, passwordController;
 
@@ -62,12 +62,12 @@ class LoginController extends GetxController {
   //   loginFormKey.currentState!.save();
   // }
 
-  Future<void> loginWithEmail() async {
-    final isValid = loginFormKey.currentState!.validate();
+  Future<void> loginWithEmail({@required formkey}) async {
+    final isValid = formkey.currentState!.validate();
     if (!isValid) {
       return;
     }
-    loginFormKey.currentState!.save();
+    formkey.currentState!.save();
 
     var headers = {'content-Type': 'application/json'};
     try {
@@ -91,6 +91,7 @@ class LoginController extends GetxController {
 
         emailController.clear();
         passwordController.clear();
+
         Get.to(DashBoardScreen());
         //Get.off(HomeScreen());
       } else {

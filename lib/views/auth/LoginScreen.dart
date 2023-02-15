@@ -1,4 +1,3 @@
-
 import 'package:first_project/controllers/auth/LoginController.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -11,8 +10,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen1State extends State<LoginScreen> {
-  LoginController loginController = Get.put(LoginController());
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final loginController = Get.put(LoginController());
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool passwordVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordVisible = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +32,7 @@ class _LoginScreen1State extends State<LoginScreen> {
                         vertical: 50, horizontal: 20),
                     child: Form(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        key: loginController.loginFormKey,
+                        key: _formKey,
                         child: Column(
                           children: [
                             Container(
@@ -64,12 +72,28 @@ class _LoginScreen1State extends State<LoginScreen> {
                               validator: (value) {
                                 return loginController.validatePassword(value!);
                               },
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 prefixIcon: Icon(Icons.lock),
                                 labelText: 'password',
                                 border: OutlineInputBorder(),
+                                suffixIcon: IconButton(
+                                  icon: Icon(passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(
+                                      () {
+                                        passwordVisible = !passwordVisible;
+                                      },
+                                    );
+                                  },
+                                ),
+                                alignLabelWithHint: false,
+                                filled: true,
                               ),
-                              obscureText: true,
+                              obscureText: passwordVisible,
+                              keyboardType: TextInputType.visiblePassword,
+                              textInputAction: TextInputAction.done,
                             ),
                             const SizedBox(
                               height: 20,
@@ -84,7 +108,8 @@ class _LoginScreen1State extends State<LoginScreen> {
                                             Colors.black),
                                   ),
                                   onPressed: () {
-                                    loginController.loginWithEmail();
+                                    loginController.loginWithEmail(
+                                        formkey: _formKey);
                                   },
                                   child: Text('Login'),
                                 ),
