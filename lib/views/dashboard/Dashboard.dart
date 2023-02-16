@@ -15,7 +15,6 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
-  String name = "Sohail Afzal";
   @override
   Widget build(BuildContext context) {
     var user = DashboardController.getUser();
@@ -34,7 +33,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ],
         ),
         body: Column(
-          children: [Text("It is User Name ")],
+          children: [
+            Text(DashboardController().userName),
+            Text(DashboardController().userDesignation),
+            Text(DashboardController().email),
+            Image.network(DashboardController().pictureUrl)
+          ],
         ));
   }
 }

@@ -113,18 +113,18 @@ class _LoginScreen1State extends State<LoginScreen> {
                                   },
                                   child: Text('Login'),
                                 ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                ElevatedButton(
-                                  style: ButtonStyle(
-                                    foregroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            Colors.black),
-                                  ),
-                                  onPressed: () {},
-                                  child: Text('Reset'),
-                                )
+                                // const SizedBox(
+                                //   width: 20,
+                                // ),
+                                // ElevatedButton(
+                                //   style: ButtonStyle(
+                                //     foregroundColor:
+                                //         MaterialStateProperty.all<Color>(
+                                //             Colors.black),
+                                //   ),
+                                //   onPressed: () {},
+                                //   child: Text('Reset'),
+                                // )
                               ],
                             )
                           ],
