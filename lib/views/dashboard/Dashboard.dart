@@ -1,6 +1,7 @@
 import 'package:first_project/controllers/auth/LoginController.dart';
 import 'package:first_project/controllers/dashboard/DashboardController.dart';
 import 'package:first_project/views/auth/LoginScreen.dart';
+import 'package:first_project/views/drawer/Drawer.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     var user = DashboardController.getUser();
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(onPressed: () {}, icon: Icon(Icons.backpack)),
           centerTitle: true,
           title: Text('Dashboard'),
           actions: [
@@ -32,13 +32,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 icon: Icon(Icons.logout))
           ],
         ),
+        drawer: DrawerClass().draw(),
         body: Column(
-          children: [
-            Text(DashboardController().userName),
-            Text(DashboardController().userDesignation),
-            Text(DashboardController().email),
-            Image.network(DashboardController().pictureUrl)
-          ],
+          children: [],
         ));
   }
 }
