@@ -32,7 +32,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 icon: Icon(Icons.logout))
           ],
         ),
-        drawer: DrawerClass().draw(),
+        drawer: HomeDrawer(),
         body: Column(
           children: [],
         ));

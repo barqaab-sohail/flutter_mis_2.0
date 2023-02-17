@@ -4,25 +4,24 @@ import 'package:flutter/material.dart';
 
 import '../drawer/Drawer.dart';
 
-class EmployeeList extends StatefulWidget {
-  const EmployeeList({super.key});
+class ProjectList extends StatefulWidget {
+  const ProjectList({super.key});
 
   @override
-  State<EmployeeList> createState() => _EmployeeListState();
+  State<ProjectList> createState() => _ProjectListState();
 }
 
-class _EmployeeListState extends State<EmployeeList> {
+class _ProjectListState extends State<ProjectList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Employee List'),
+          title: Text('Project List'),
         ),
         drawer: HomeDrawer(),
         body: Column(
           children: [],
         ));
-    ;
   }
 }
