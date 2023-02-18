@@ -29,7 +29,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
     setState(() {
       userName = prefs.getString('userName')!;
       userDesignation = prefs.getString('userDesignation')!;
-      pictureUrl = prefs.getString('pictureUrl')!;
+      pictureUrl = prefs.getString('pictureUrl').toString();
       email = prefs.getString('email')!;
     });
   }
