@@ -1,4 +1,5 @@
 import 'package:first_project/controllers/dashboard/DashboardController.dart';
+import 'package:first_project/modal/UserModal.dart';
 import 'package:first_project/views/project/ProjectList.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/controllers/auth/LoginController.dart';
@@ -6,6 +7,7 @@ import 'package:first_project/views/auth/LoginScreen.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:first_project/views/hr/EmployeeList.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../asset/AssetList.dart';
 
@@ -17,6 +19,27 @@ class HomeDrawer extends StatefulWidget {
 }
 
 class _HomeDrawerState extends State<HomeDrawer> {
+  String userName = '';
+  String userDesignation = '';
+  String pictureUrl = '';
+  String email = '';
+
+  loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('userName')!;
+      userDesignation = prefs.getString('userDesignation')!;
+      pictureUrl = prefs.getString('pictureUrl')!;
+      email = prefs.getString('email')!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -34,12 +57,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
             child: Column(
               children: [
                 // Image.network(
-                //   DashboardController().pictureUrl,
+                //   pictureUrl,
                 //   height: 50,
                 // ),
-                Text('Sohail Afzal'),
-                Text('IT Coordinator'),
-                Text('sohail.afzal@barqaab.com'),
+                Text(userName),
+                Text(userDesignation),
+                Text(email),
               ],
             ),
           ),

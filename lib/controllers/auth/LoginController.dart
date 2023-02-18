@@ -92,12 +92,7 @@ class LoginController extends GetxController {
         emailController.clear();
         passwordController.clear();
 
-        Get.to(() => DashBoardScreen(), arguments: [
-          loginUser.userName.toString(),
-          loginUser.userDesignation.toString(),
-          loginUser.email.toString(),
-          loginUser.pictureUrl.toString()
-        ]);
+        Get.to(() => DashBoardScreen());
         //Get.off(HomeScreen());
       } else {
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
