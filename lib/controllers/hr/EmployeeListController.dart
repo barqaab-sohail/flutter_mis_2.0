@@ -31,7 +31,6 @@ class EmployeListController extends GetxController {
           await http.post(url, body: jsonEncode(body), headers: headers);
       final json = jsonDecode(response.body);
       if (json['status'] == 200) {
-        EmployeeModal employees<List>  = UserModal.fromJson(json);
         Get.to(() => EmployeeList());
         //Get.off(HomeScreen());
       } else {
