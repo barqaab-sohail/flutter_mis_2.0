@@ -10,6 +10,7 @@ import 'package:first_project/views/hr/EmployeeList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../asset/AssetList.dart';
+import '../dashboard/Dashboard.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({super.key});
@@ -65,6 +66,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 Text(email),
               ],
             ),
+          ),
+          ListTile(
+            title: const Text('Dashboard'),
+            onTap: () {
+              Get.to(() => DashBoardScreen());
+            },
           ),
           ListTile(
             title: const Text('HR'),

@@ -23,14 +23,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: Text('Dashboard'),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  LoginController.logout();
-                  Get.to(LoginScreen());
-                },
-                icon: Icon(Icons.logout))
-          ],
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {
+          //         LoginController.logout();
+          //         Get.to(LoginScreen());
+          //       },
+          //       icon: Icon(Icons.logout))
+          // ],
         ),
         drawer: HomeDrawer(),
         body: Column(
