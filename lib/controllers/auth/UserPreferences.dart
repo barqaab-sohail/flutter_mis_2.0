@@ -10,7 +10,6 @@ class UserPreference {
     sp.setString('userDesignation', responseModel.userDesignation.toString());
     sp.setString('email', responseModel.email.toString());
     sp.setString('pictureUrl', responseModel.pictureUrl.toString());
-    // sp.setBool('isLogin', responseModel.isLogin!);
 
     return true;
   }

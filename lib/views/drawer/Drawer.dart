@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:first_project/views/hr/EmployeeList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:first_project/controllers/auth/UserPreferences.dart';
 import '../asset/AssetList.dart';
 import '../dashboard/Dashboard.dart';
 
@@ -25,6 +25,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
   String pictureUrl = '';
   String email = '';
 
+  UserPreference userPreference = UserPreference();
+
+  void test() {
+    userPreference.getUser().then((value) {
+      print(value.pictureUrl);
+    });
+  }
+
   loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -39,6 +47,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   void initState() {
     super.initState();
     loadUserData();
+    test();
   }
 
   @override
@@ -111,7 +120,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
               ),
               IconButton(
                   onPressed: () {
-                    LoginController.logout();
+                    //LoginController.logout();
+                    userPreference.removeUser();
                     Get.to(LoginScreen());
                   },
                   icon: Icon(Icons.logout)),
