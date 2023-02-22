@@ -10,9 +10,9 @@ import 'package:first_project/views/project/ProjectList.dart';
 class AppPages {
   static final pages = [
     GetPage(
-      name: Routes.LOGIN_SCREEN,
-      page: () => LoginScreen(),
-    ),
+        name: Routes.LOGIN_SCREEN,
+        page: () => LoginScreen(),
+        binding: InitialBinding()),
     GetPage(
         name: Routes.DASHBAORD,
         page: () => DashBoardScreen(),

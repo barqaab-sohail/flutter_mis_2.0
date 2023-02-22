@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controllers/auth/UserPreferences.dart';
+
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
 
@@ -16,6 +18,13 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  UserPreference userPreference = UserPreference();
+  @override
+  void initState() {
+    super.initState();
+    //userPreference.getUser().then((value) => {token = value.token!});
+  }
+
   @override
   Widget build(BuildContext context) {
     var user = DashboardController.getUser();

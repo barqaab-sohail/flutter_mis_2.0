@@ -3,6 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../modal/UserModal.dart';
 
 class UserPreference {
+  String? token;
+  String? userName;
+  String? userDesignation;
+  String? email;
+  String? pictureUrl;
+
   Future<bool> saveUser(UserModal responseModel) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.setString('token', responseModel.token.toString());
@@ -16,11 +22,11 @@ class UserPreference {
 
   Future<UserModal> getUser() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
-    String? token = sp.getString('token');
-    String? userName = sp.getString('userName');
-    String? userDesignation = sp.getString('userDesignation');
-    String? email = sp.getString('email');
-    String? pictureUrl = sp.getString('pictureUrl');
+    this.token = sp.getString('token');
+    this.userName = sp.getString('userName');
+    this.userDesignation = sp.getString('userDesignation');
+    this.email = sp.getString('email');
+    this.pictureUrl = sp.getString('pictureUrl');
 
     // bool? isLogin = sp.getBool('isLogin');
 
@@ -30,6 +36,11 @@ class UserPreference {
         userDesignation: userDesignation,
         email: email,
         pictureUrl: pictureUrl);
+  }
+
+  void getToken() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    this.token = sp.getString('token')!;
   }
 
   Future<bool> removeUser() async {

@@ -18,7 +18,6 @@ class LoginController extends GetxController {
 
   var email = '';
   var password = '';
-
   var loginDesignation = '';
   var loginPicture = '';
 

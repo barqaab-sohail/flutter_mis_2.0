@@ -1,4 +1,5 @@
 import 'package:first_project/controllers/auth/LoginController.dart';
+import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreen1State extends State<LoginScreen> {
   final loginController = Get.put(LoginController());
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   bool passwordVisible = false;
 
   @override

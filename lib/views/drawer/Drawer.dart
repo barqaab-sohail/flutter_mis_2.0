@@ -1,4 +1,5 @@
 import 'package:first_project/controllers/dashboard/DashboardController.dart';
+import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:first_project/modal/UserModal.dart';
 import 'package:first_project/views/project/ProjectList.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   String userDesignation = '';
   String pictureUrl = '';
   String email = '';
+  final employeListController = Get.put(EmployeListController());
 
   UserPreference userPreference = UserPreference();
 
@@ -85,6 +87,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ListTile(
             title: const Text('HR'),
             onTap: () {
+              employeListController.EmployeeList();
               Get.to(() => EmployeeList());
               // Update the state of the app
               // ...

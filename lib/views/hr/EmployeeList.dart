@@ -1,6 +1,8 @@
+import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../drawer/Drawer.dart';
 
@@ -12,6 +14,8 @@ class EmployeeList extends StatefulWidget {
 }
 
 class _EmployeeListState extends State<EmployeeList> {
+  final employeeListController = Get.put(EmployeListController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

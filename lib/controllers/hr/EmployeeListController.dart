@@ -1,3 +1,4 @@
+import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +8,12 @@ import 'dart:convert';
 import 'package:first_project/modal/hr/EmployeeModal.dart';
 
 class EmployeListController extends GetxController {
-  String token = '';
-
-  loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString('token')!;
-  }
-
+  UserPreference userPreference = UserPreference();
+  var token = '';
   @override
   void onInit() {
     super.onInit();
-    loadUserData();
+    userPreference.getUser().then((value) => {token = value.token!});
   }
 
   Future<void> EmployeeList() async {
@@ -31,7 +27,8 @@ class EmployeListController extends GetxController {
           await http.post(url, body: jsonEncode(body), headers: headers);
       final json = jsonDecode(response.body);
       if (json['status'] == 200) {
-        Get.to(() => EmployeeList());
+        print('Request is found OK');
+        //Get.to(() => EmployeeList());
         //Get.off(HomeScreen());
       } else {
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
