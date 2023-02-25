@@ -6,4 +6,5 @@ class BaseAPI {
 class EndPoints {
   static final String login = 'mis/login';
   static final String employeeList = 'employees';
+  static final String projectList = 'powerRunningProjectsTable';
 }

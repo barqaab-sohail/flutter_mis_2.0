@@ -21,7 +21,7 @@ class ProjectListController extends GetxController {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ' + token
     };
-    var url = Uri.parse(BaseAPI.baseURL + EndPoints.employeeList);
+    var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectList);
     http.Response response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);

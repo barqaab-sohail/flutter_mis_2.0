@@ -59,7 +59,7 @@ class _EmployeeListState extends State<EmployeeList> {
               return Text(snapshot.error.toString());
             }
             // By default show a loading spinner.
-            return const CircularProgressIndicator();
+            return Center(child: const CircularProgressIndicator());
           },
         ));
   }

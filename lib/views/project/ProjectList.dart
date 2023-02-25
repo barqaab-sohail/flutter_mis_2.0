@@ -33,21 +33,56 @@ class _ProjectListState extends State<ProjectList> {
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.all(18.0),
-                      child: Column(
-                        children: [
-                          Text(snapshot.data![index].projectName!),
-                          Text(snapshot.data![index].projectType!),
-                          Text(snapshot.data![index].paymentReceived!),
-                          Text(snapshot.data![index].pendingPayments!),
-                        ],
-                      ),
+                      child: Column(children: [
+                        Card(
+                          color: Colors.blue[200],
+                          shadowColor: Colors.amber,
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ListTile(
+                            // leading: CircleAvatar(child: Icon(Icons.add)),
+                            title: Text(
+                              snapshot.data![index].projectName!,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Project Type: ' +
+                                        snapshot.data![index].projectType!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  Text(
+                                    'Total Payment Received: ' +
+                                        snapshot.data![index].paymentReceived!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  Text(
+                                    'Total Pending Payments: ' +
+                                        snapshot.data![index].pendingPayments!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ]),
+                            // trailing: Icon(Icons.train),
+                          ),
+                        ),
+                        // children: [
+                        //   Text(snapshot.data![index].projectName!),
+                        //   Text(snapshot.data![index].projectType!),
+                        //   Text(snapshot.data![index].paymentReceived!),
+                        //   Text(snapshot.data![index].pendingPayments!),
+                        // ],
+                      ]),
                     );
                   });
             } else if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             }
             // By default show a loading spinner.
-            return const CircularProgressIndicator();
+            return Center(child: const CircularProgressIndicator());
           },
         ));
   }
