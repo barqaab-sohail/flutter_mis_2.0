@@ -10,10 +10,26 @@ import 'package:first_project/modal/hr/EmployeeModal.dart';
 class EmployeListController extends GetxController {
   UserPreference userPreference = UserPreference();
   var token = '';
+  Rx<List<EmployeeModal>> foundEmployees = Rx<List<EmployeeModal>>([]);
+
   @override
   void onInit() {
     super.onInit();
+    EmployeeList().then((value) => foundEmployees.value = value);
     userPreference.getUser().then((value) => {token = value.token!});
+  }
+
+  @override
+  void onClose() {}
+  void filterEmployee(String searchText) async {
+    List<EmployeeModal> results = ([]);
+    ;
+    if (searchText == null) {
+      results = await EmployeeList();
+    } else {
+      results = foundEmployees.map((data) => data?.where((element) =>  element.toString()
+              .toLowerCase().contains(searchText.toLowerCase())));
+
   }
 
   Future<List<EmployeeModal>> EmployeeList() async {
