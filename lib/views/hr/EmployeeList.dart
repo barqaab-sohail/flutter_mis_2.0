@@ -15,6 +15,11 @@ class EmployeeList extends StatefulWidget {
 }
 
 class _EmployeeListState extends State<EmployeeList> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final employeeListController = Get.put(EmployeListController());
 
   @override
@@ -25,66 +30,93 @@ class _EmployeeListState extends State<EmployeeList> {
           title: Text('Employee List'),
         ),
         drawer: HomeDrawer(),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(children: [
-            TextField(
-              // onChanged: (value) => _runFilter(value),
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-                hintText: "Search",
-                suffixIcon: const Icon(Icons.search),
-                // prefix: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: const BorderSide(),
-                ),
+        body: Column(children: [
+          TextField(
+            // onChanged: (value) => _runFilter(value),
+            decoration: InputDecoration(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+              hintText: "Search",
+              suffixIcon: const Icon(Icons.search),
+              // prefix: Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+                borderSide: const BorderSide(),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-                child: FutureBuilder<List<EmployeeModal>>(
-              future: employeeListController.EmployeeList(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      itemCount: employeeListController
-                          .foundEmployees.value.length, //snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(18.0),
-                          child: Column(
-                            children: [
-                              Image.network(
-                                snapshot.data![index].picture!,
-                                width: 60,
-                              ),
-                              Text(snapshot.data![index].fullName!),
-                              Text(snapshot.data![index].designation!),
-                              Text('Employee No: ' +
-                                  snapshot.data![index].employeeNo!),
-                              Text('Date of Birth: ' +
-                                  snapshot.data![index].dateOfBirth!),
-                              Text('Date of Joining: ' +
-                                  snapshot.data![index].dateOfJoining!),
-                              Text('Mobile: ' + snapshot.data![index].mobile!),
-                              Text('Current Status: ' +
-                                  snapshot.data![index].status!),
-                            ],
-                          ),
-                        );
-                      });
-                } else if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
-                }
-                // By default show a loading spinner.
-                return Center(child: const CircularProgressIndicator());
-              },
-            ))
-          ]),
-        ));
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+              child: FutureBuilder<List<EmployeeModal>>(
+            future: employeeListController.EmployeeList(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) => Card(
+                    elevation: 1,
+                    margin: const EdgeInsets.symmetric(vertical: 2),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage:
+                            NetworkImage(snapshot.data![index].picture!),
+                        backgroundColor: Colors.transparent,
+                      ),
+                      title: Text(snapshot.data![index].fullName!),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(snapshot.data![index].designation!),
+                          Text('Employee No: ' +
+                              snapshot.data![index].employeeNo!),
+                          Text('Date of Birth: ' +
+                              snapshot.data![index].dateOfBirth!),
+                          Text('Date of Joining: ' +
+                              snapshot.data![index].dateOfJoining!),
+                          Text('Mobile: ' + snapshot.data![index].mobile!),
+                          Text('Current Status: ' +
+                              snapshot.data![index].status!),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  // {
+                  //   return Padding(
+                  //     padding: const EdgeInsets.all(18.0),
+                  //     child:
+                  //     Column(
+                  //       children: [
+                  //         Image.network(
+                  //           snapshot.data![index].picture!,
+                  //           width: 60,
+                  //         ),
+                  //         Text(snapshot.data![index].fullName!),
+                  //         Text(snapshot.data![index].designation!),
+                  //         Text('Employee No: ' +
+                  //             snapshot.data![index].employeeNo!),
+                  //         Text('Date of Birth: ' +
+                  //             snapshot.data![index].dateOfBirth!),
+                  //         Text('Date of Joining: ' +
+                  //             snapshot.data![index].dateOfJoining!),
+                  //         Text('Mobile: ' + snapshot.data![index].mobile!),
+                  //         Text('Current Status: ' +
+                  //             snapshot.data![index].status!),
+                  //       ],
+                  //     ),
+                  //   );
+                  // }
+                );
+              } else if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }
+              // By default show a loading spinner.
+              return Center(child: const CircularProgressIndicator());
+            },
+          ))
+        ]));
   }
 }

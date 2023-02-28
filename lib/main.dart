@@ -15,7 +15,7 @@ class MisApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Flutter Demo',
+        title: 'BARQAAB MIS',
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
         getPages: AppPages.pages,
