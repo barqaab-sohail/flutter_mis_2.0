@@ -23,6 +23,7 @@ class ProjectListController extends GetxController {
     };
     var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectList);
     http.Response response = await http.get(url, headers: requestHeaders);
+
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
       List<ProjectListModal> projects = List<ProjectListModal>.from(
