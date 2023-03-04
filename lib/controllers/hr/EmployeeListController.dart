@@ -22,7 +22,7 @@ class EmployeListController extends GetxController {
   @override
   void onClose() {}
 
-  Future<List<EmployeeModal>> EmployeeList() async {
+  Future<List<EmployeeModal>> EmployeeList({String? query}) async {
     //var headers = {'content-Type': 'application/json'};
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
@@ -34,6 +34,15 @@ class EmployeListController extends GetxController {
       Iterable responseData = jsonDecode(response.body);
       List<EmployeeModal> employees = List<EmployeeModal>.from(
           responseData.map((model) => EmployeeModal.fromJson(model)));
+
+      if (query != null) {
+        employees = employees
+            .where((element) => element.fullName
+                .toString()
+                .toLowerCase()
+                .contains((query.toLowerCase())))
+            .toList();
+      }
       return employees;
     } else {
       throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";

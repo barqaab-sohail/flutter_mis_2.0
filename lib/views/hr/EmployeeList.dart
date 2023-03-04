@@ -1,4 +1,5 @@
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
+import 'package:first_project/controllers/hr/SearchEmployee.dart';
 import 'package:first_project/modal/hr/EmployeeModal.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -28,6 +29,14 @@ class _EmployeeListState extends State<EmployeeList> {
         appBar: AppBar(
           centerTitle: true,
           title: Text('Employee List'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: SearchEmployee());
+              },
+              icon: Icon(Icons.search_sharp),
+            )
+          ],
         ),
         drawer: HomeDrawer(),
         body: Column(children: [
