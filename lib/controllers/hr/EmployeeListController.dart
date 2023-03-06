@@ -26,8 +26,25 @@ class EmployeListController extends GetxController {
 
   Future<List<EmployeeModal>> EmployeeList({String? query}) async {
     //var headers = {'content-Type': 'application/json'};
-    var isCacheExist = await APICacheManager().getCacheData('employee_list');
-    if (!isCacheExist) {
+    var isCacheExist =
+        await APICacheManager().isAPICacheKeyExist('employee_list');
+    if (isCacheExist) {
+      print('cache data');
+      var cacheData = await APICacheManager().getCacheData('employee_list');
+      Iterable responseData = jsonDecode(cacheData.syncData);
+      List<EmployeeModal> employees = List<EmployeeModal>.from(
+          responseData.map((model) => EmployeeModal.fromJson(model)));
+
+      if (query != null) {
+        employees = employees
+            .where((element) => element.fullName
+                .toString()
+                .toLowerCase()
+                .contains((query.toLowerCase())))
+            .toList();
+      }
+      return employees;
+    } else {
       print('API request');
       Map<String, String> requestHeaders = {
         'Content-type': 'application/json',
@@ -56,22 +73,6 @@ class EmployeListController extends GetxController {
       } else {
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
       }
-    } else {
-      print('cache data');
-      var cacheData = await APICacheManager().getCacheData('employee_list');
-      Iterable responseData = jsonDecode(cacheData.syncData);
-      List<EmployeeModal> employees = List<EmployeeModal>.from(
-          responseData.map((model) => EmployeeModal.fromJson(model)));
-
-      if (query != null) {
-        employees = employees
-            .where((element) => element.fullName
-                .toString()
-                .toLowerCase()
-                .contains((query.toLowerCase())))
-            .toList();
-      }
-      return employees;
     }
   }
 }
