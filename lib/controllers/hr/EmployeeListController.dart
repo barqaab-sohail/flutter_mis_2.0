@@ -1,14 +1,12 @@
 import 'dart:io';
-
 import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:first_project/modal/hr/EmployeeModal.dart';
+import '../../utils/FileName.dart';
 
 class EmployeListController extends GetxController {
   UserPreference userPreference = UserPreference();
@@ -28,7 +26,7 @@ class EmployeListController extends GetxController {
   Future<List<EmployeeModal>> EmployeeList({String? query}) async {
     //var headers = {'content-Type': 'application/json'};
 
-    String fileName = "employeList.json";
+    String fileName = FileName.employeeList;
     var dir = await getTemporaryDirectory();
     File file = File(dir.path + "/" + fileName);
 

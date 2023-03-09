@@ -1,7 +1,5 @@
 import 'package:first_project/controllers/auth/LoginController.dart';
-import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:flutter/material.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {

@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:first_project/modal/UserModal.dart';
 import 'package:first_project/views/dashboard/Dashboard.dart';
 
+import '../../utils/FileName.dart';
+
 class LoginController extends GetxController {
   //GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
@@ -130,13 +132,27 @@ class LoginController extends GetxController {
 
   static logout() async {
     final prefs = await SharedPreferences.getInstance();
-    String fileName = "employeList.json";
+    String employeeList = FileName.employeeList;
+    String projectList = FileName.projectList;
+    String assetList = FileName.assetList;
+
     var dir = await getTemporaryDirectory();
-    final file = await File(dir.path + "/" + fileName);
-    if (file.existsSync()) {
-      await file.delete();
-      print('file delete');
+    final employeeFile = await File(dir.path + "/" + employeeList);
+    if (employeeFile.existsSync()) {
+      await employeeFile.delete();
     }
+
+    final projectFile = await File(dir.path + "/" + projectList);
+    if (projectFile.existsSync()) {
+      await projectFile.delete();
+    }
+
+    final assetFile = await File(dir.path + "/" + assetList);
+    if (assetFile.existsSync()) {
+      print('delete asset list');
+      await assetFile.delete();
+    }
+
     prefs.clear();
     Get.off(() => LoginScreen());
   }

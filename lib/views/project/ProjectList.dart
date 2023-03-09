@@ -1,7 +1,6 @@
 import 'package:first_project/controllers/project/ProjectListController.dart';
+import 'package:first_project/controllers/project/searchProject.dart';
 import 'package:first_project/modal/project/ProjectListModal.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../drawer/Drawer.dart';
@@ -22,6 +21,14 @@ class _ProjectListState extends State<ProjectList> {
         appBar: AppBar(
           centerTitle: true,
           title: Text('Project List'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: SearchProject());
+              },
+              icon: Icon(Icons.search_sharp),
+            )
+          ],
         ),
         drawer: HomeDrawer(),
         body: FutureBuilder<List<ProjectListModal>>(
