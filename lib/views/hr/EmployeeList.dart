@@ -39,20 +39,21 @@ class _EmployeeListState extends State<EmployeeList> {
         ),
         drawer: HomeDrawer(),
         body: Column(children: [
-          TextField(
-            // onChanged: (value) => _runFilter(value),
-            decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-              hintText: "Search",
-              suffixIcon: const Icon(Icons.search),
-              // prefix: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-                borderSide: const BorderSide(),
-              ),
-            ),
-          ),
+          // TextField(
+          //   onChanged: (value) =>
+          //       employeeListController.EmployeeList(query: value),
+          //   decoration: InputDecoration(
+          //     contentPadding:
+          //         const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+          //     hintText: "Search",
+          //     suffixIcon: const Icon(Icons.search),
+          //     // prefix: Icon(Icons.search),
+          //     border: OutlineInputBorder(
+          //       borderRadius: BorderRadius.circular(20.0),
+          //       borderSide: const BorderSide(),
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
             height: 20,
           ),

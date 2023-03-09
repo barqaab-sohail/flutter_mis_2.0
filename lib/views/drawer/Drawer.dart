@@ -1,12 +1,9 @@
-import 'package:first_project/controllers/dashboard/DashboardController.dart';
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
-import 'package:first_project/modal/UserModal.dart';
 import 'package:first_project/views/project/ProjectList.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/controllers/auth/LoginController.dart';
 import 'package:first_project/views/auth/LoginScreen.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/routes/default_transitions.dart';
 import 'package:first_project/views/hr/EmployeeList.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_project/controllers/auth/UserPreferences.dart';
@@ -25,23 +22,19 @@ class _HomeDrawerState extends State<HomeDrawer> {
   String userDesignation = '';
   String pictureUrl = '';
   String email = '';
+
   final employeListController = Get.put(EmployeListController());
 
   UserPreference userPreference = UserPreference();
-
-  void test() {
-    userPreference.getUser().then((value) {
-      print(value.pictureUrl);
-    });
-  }
 
   loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       userName = prefs.getString('userName')!;
       userDesignation = prefs.getString('userDesignation')!;
-      pictureUrl = prefs.getString('pictureUrl').toString();
+      pictureUrl = prefs.getString('pictureUrl')!;
       email = prefs.getString('email')!;
+      print(prefs.getString('token'));
     });
   }
 
@@ -49,7 +42,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   void initState() {
     super.initState();
     loadUserData();
-    test();
   }
 
   @override
@@ -68,10 +60,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
             child: Column(
               children: [
-                // Image.network(
-                //   pictureUrl,
-                //   height: 50,
-                // ),
+                CircleAvatar(
+                  radius: 20.0,
+                  backgroundImage: NetworkImage(pictureUrl),
+                  backgroundColor: Colors.transparent,
+                ),
                 Text(userName),
                 Text(userDesignation),
                 Text(email),
@@ -123,9 +116,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
               ),
               IconButton(
                   onPressed: () {
-                    //LoginController.logout();
                     userPreference.removeUser();
-                    Get.to(LoginScreen());
+                    LoginController.logout();
                   },
                   icon: Icon(Icons.logout)),
             ],

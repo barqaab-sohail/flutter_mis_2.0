@@ -41,7 +41,8 @@ class EmployeListController extends GetxController {
 
       if (query != null) {
         employees = employees
-            .where((element) => element.fullName
+            .where((element) => element
+                .toJson()
                 .toString()
                 .toLowerCase()
                 .contains((query.toLowerCase())))
@@ -66,7 +67,8 @@ class EmployeListController extends GetxController {
 
         if (query != null) {
           employees = employees
-              .where((element) => element.fullName
+              .where((element) => element
+                  .toJson()
                   .toString()
                   .toLowerCase()
                   .contains((query.toLowerCase())))
