@@ -98,6 +98,7 @@ class LoginController extends GetxController {
         Get.to(() => DashBoardScreen());
         //Get.off(HomeScreen());
       } else {
+        Get.to(() => LoginScreen());
         throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
       }
     } catch (error) {
@@ -137,10 +138,6 @@ class LoginController extends GetxController {
     String assetList = FileName.assetList;
 
     var dir = await getTemporaryDirectory();
-    final employeeFile = await File(dir.path + "/" + employeeList);
-    if (employeeFile.existsSync()) {
-      await employeeFile.delete();
-    }
 
     final projectFile = await File(dir.path + "/" + projectList);
     if (projectFile.existsSync()) {
