@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:first_project/controllers/hr/SearchEmployee.dart';
-import 'package:first_project/modal/hr/EmployeeModal.dart';
+import 'package:first_project/model/hr/EmployeeModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../drawer/Drawer.dart';

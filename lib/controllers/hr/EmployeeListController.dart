@@ -1,12 +1,9 @@
-import 'dart:io';
 import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:first_project/modal/hr/EmployeeModal.dart';
-import '../../utils/FileName.dart';
+import 'package:first_project/model/hr/EmployeeModel.dart';
 
 class EmployeListController extends GetxController {
   UserPreference userPreference = UserPreference();
