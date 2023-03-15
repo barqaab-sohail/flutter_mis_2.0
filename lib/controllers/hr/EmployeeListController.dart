@@ -22,25 +22,6 @@ class EmployeListController extends GetxController {
   @override
   void onClose() {}
 
-  Future<void> getNewEmployeeList() async {
-    print('call new employee list');
-    Map<String, String> requestHeaders = {
-      'Content-type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    };
-    var url = Uri.parse(BaseAPI.baseURL + EndPoints.employeeList);
-    http.Response response = await http.get(url, headers: requestHeaders);
-    if (response.statusCode == 200) {
-      Iterable responseData = jsonDecode(response.body);
-      List<EmployeeModal> newEmployees = List<EmployeeModal>.from(
-          responseData.map((model) => EmployeeModal.fromJson(model))).toList();
-
-      _employees = newEmployees;
-    } else {
-      throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
-    }
-  }
-
   Future<List<EmployeeModal>> EmployeeList({String? query}) async {
     if (_employees.isNotEmpty) {
       if (query != null) {

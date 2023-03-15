@@ -11,6 +11,8 @@ import 'dart:convert';
 class ProjectListController extends GetxController {
   UserPreference userPreference = UserPreference();
   var token = '';
+  List<ProjectListModal> _projects = [];
+  List<ProjectListModal> filterProjects = [];
   @override
   void onInit() {
     super.onInit();
@@ -18,18 +20,34 @@ class ProjectListController extends GetxController {
   }
 
   Future<List<ProjectListModal>> ProjectList({String? query}) async {
-    String fileName = FileName.projectList;
-    var dir = await getTemporaryDirectory();
-    File file = File(dir.path + "/" + fileName);
+    if (_projects.isNotEmpty) {
+      if (query != null) {
+        filterProjects = _projects
+            .where((element) => element
+                .toJson()
+                .toString()
+                .toLowerCase()
+                .contains((query.toLowerCase())))
+            .toList();
+        return filterProjects;
+      }
+      print('From save value');
+      return _projects;
+    }
+    print("Reading Project List from API");
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    };
+    var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectList);
+    http.Response response = await http.get(url, headers: requestHeaders);
 
-    if (file.existsSync()) {
-      print("Reading Project List from Device Cache");
-      final data = file.readAsStringSync();
-      Iterable responseData = jsonDecode(data);
-      List<ProjectListModal> projects = List<ProjectListModal>.from(
+    if (response.statusCode == 200) {
+      Iterable responseData = jsonDecode(response.body);
+      _projects = List<ProjectListModal>.from(
           responseData.map((model) => ProjectListModal.fromJson(model)));
       if (query != null) {
-        projects = projects
+        _projects = _projects
             .where((element) => element
                 .toJson()
                 .toString()
@@ -37,35 +55,9 @@ class ProjectListController extends GetxController {
                 .contains((query.toLowerCase())))
             .toList();
       }
-      return projects;
+      return _projects;
     } else {
-      print("Reading Project List from API");
-      Map<String, String> requestHeaders = {
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      };
-      var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectList);
-      http.Response response = await http.get(url, headers: requestHeaders);
-
-      if (response.statusCode == 200) {
-        file.writeAsStringSync(response.body,
-            flush: true, mode: FileMode.write);
-        Iterable responseData = jsonDecode(response.body);
-        List<ProjectListModal> projects = List<ProjectListModal>.from(
-            responseData.map((model) => ProjectListModal.fromJson(model)));
-        if (query != null) {
-          projects = projects
-              .where((element) => element
-                  .toJson()
-                  .toString()
-                  .toLowerCase()
-                  .contains((query.toLowerCase())))
-              .toList();
-        }
-        return projects;
-      } else {
-        throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
-      }
+      throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
     }
   }
 }
