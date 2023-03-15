@@ -1,10 +1,9 @@
-import 'dart:io';
+import 'dart:async';
 import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:first_project/modal/project/ProjectListModal.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
-import 'package:first_project/utils/FileName.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,7 +11,6 @@ class ProjectListController extends GetxController {
   UserPreference userPreference = UserPreference();
   var token = '';
   List<ProjectListModal> _projects = [];
-  List<ProjectListModal> filterProjects = [];
   @override
   void onInit() {
     super.onInit();
@@ -21,17 +19,6 @@ class ProjectListController extends GetxController {
 
   Future<List<ProjectListModal>> ProjectList({String? query}) async {
     if (_projects.isNotEmpty) {
-      if (query != null) {
-        filterProjects = _projects
-            .where((element) => element
-                .toJson()
-                .toString()
-                .toLowerCase()
-                .contains((query.toLowerCase())))
-            .toList();
-        return filterProjects;
-      }
-      print('From save value');
       return _projects;
     }
     print("Reading Project List from API");
@@ -44,6 +31,7 @@ class ProjectListController extends GetxController {
 
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
+      debugPrint(response.body.toString());
       _projects = List<ProjectListModal>.from(
           responseData.map((model) => ProjectListModal.fromJson(model)));
       if (query != null) {

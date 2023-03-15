@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:first_project/views/auth/LoginScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -131,26 +132,21 @@ class LoginController extends GetxController {
     }
   }
 
-  static logout() async {
+  static logout({String? email, String? authToken}) async {
     final prefs = await SharedPreferences.getInstance();
-    String employeeList = FileName.employeeList;
-    String projectList = FileName.projectList;
-    String assetList = FileName.assetList;
-
-    var dir = await getTemporaryDirectory();
-
-    final projectFile = await File(dir.path + "/" + projectList);
-    if (projectFile.existsSync()) {
-      await projectFile.delete();
-    }
-
-    final assetFile = await File(dir.path + "/" + assetList);
-    if (assetFile.existsSync()) {
-      print('delete asset list');
-      await assetFile.delete();
-    }
-
-    prefs.clear();
-    Get.off(() => LoginScreen());
+    Map<String, String> requestHeaders = {
+      'content-Type': 'application/json',
+      'Authorization': 'Bearer ' + prefs.getString('token').toString(),
+    };
+    var body = json.encode({"email": email});
+    var url = Uri.parse(BaseAPI.baseURL + EndPoints.logout);
+    http.Response response =
+        await http.post(url, headers: requestHeaders, body: body);
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      prefs.clear();
+      Get.off(() => LoginScreen());
+      SystemNavigator.pop();
+    } else {}
   }
 }
