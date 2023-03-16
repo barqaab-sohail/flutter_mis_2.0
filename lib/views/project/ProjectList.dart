@@ -1,8 +1,9 @@
 import 'package:first_project/controllers/project/ProjectListController.dart';
 import 'package:first_project/controllers/project/searchProject.dart';
-import 'package:first_project/modal/project/ProjectListModal.dart';
+import 'package:first_project/model/project/ProjectListModal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../drawer/Drawer.dart';
 
 class ProjectList extends StatefulWidget {
@@ -14,6 +15,20 @@ class ProjectList extends StatefulWidget {
 
 class _ProjectListState extends State<ProjectList> {
   final projectListController = Get.put(ProjectListController());
+  String token = '';
+
+  loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      token = prefs.getString('token')!;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +47,7 @@ class _ProjectListState extends State<ProjectList> {
         ),
         drawer: HomeDrawer(),
         body: FutureBuilder<List<ProjectListModal>>(
-          future: projectListController.ProjectList(),
+          future: projectListController.ProjectList(authToken: token),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(

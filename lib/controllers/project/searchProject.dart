@@ -1,10 +1,22 @@
 import 'package:first_project/controllers/project/ProjectListController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../modal/project/ProjectListModal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../model/project/ProjectListModal.dart';
 
 class SearchProject extends SearchDelegate {
   final projectListController = Get.put(ProjectListController());
+  String token = '';
+
+  loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token')!;
+  }
+
+  @override
+  void initState() {
+    loadUserData();
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -35,7 +47,7 @@ class SearchProject extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder<List<ProjectListModal>>(
-      future: projectListController.ProjectList(query: query),
+      future: projectListController.ProjectList(authToken: token, query: query),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(

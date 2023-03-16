@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:first_project/controllers/hr/SearchEmployee.dart';
-import 'package:first_project/modal/hr/EmployeeModal.dart';
+import 'package:first_project/model/hr/EmployeeModal.dart';
+import 'package:first_project/views/hr/EmployeeDocuments.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../drawer/Drawer.dart';
@@ -49,21 +48,6 @@ class _EmployeeListState extends State<EmployeeList> {
         ),
         drawer: HomeDrawer(),
         body: Column(children: [
-          // TextField(
-          //   onChanged: (value) =>
-          //       employeeListController.EmployeeList(query: value),
-          //   decoration: InputDecoration(
-          //     contentPadding:
-          //         const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-          //     hintText: "Search",
-          //     suffixIcon: const Icon(Icons.search),
-          //     // prefix: Icon(Icons.search),
-          //     border: OutlineInputBorder(
-          //       borderRadius: BorderRadius.circular(20.0),
-          //       borderSide: const BorderSide(),
-          //     ),
-          //   ),
-          // ),
           const SizedBox(
             height: 20,
           ),
@@ -79,6 +63,12 @@ class _EmployeeListState extends State<EmployeeList> {
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     child: InteractiveViewer(
                         child: ListTile(
+                      onTap: () {
+                        Get.to(EmployeeDocuments(), arguments: [
+                          snapshot.data![index].id!,
+                          snapshot.data![index].fullName!,
+                        ]);
+                      },
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(snapshot.data![index].picture!,
@@ -102,32 +92,6 @@ class _EmployeeListState extends State<EmployeeList> {
                       ),
                     )),
                   ),
-
-                  // {
-                  //   return Padding(
-                  //     padding: const EdgeInsets.all(18.0),
-                  //     child:
-                  //     Column(
-                  //       children: [
-                  //         Image.network(
-                  //           snapshot.data![index].picture!,
-                  //           width: 60,
-                  //         ),
-                  //         Text(snapshot.data![index].fullName!),
-                  //         Text(snapshot.data![index].designation!),
-                  //         Text('Employee No: ' +
-                  //             snapshot.data![index].employeeNo!),
-                  //         Text('Date of Birth: ' +
-                  //             snapshot.data![index].dateOfBirth!),
-                  //         Text('Date of Joining: ' +
-                  //             snapshot.data![index].dateOfJoining!),
-                  //         Text('Mobile: ' + snapshot.data![index].mobile!),
-                  //         Text('Current Status: ' +
-                  //             snapshot.data![index].status!),
-                  //       ],
-                  //     ),
-                  //   );
-                  // }
                 );
               } else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());

@@ -1,10 +1,11 @@
-import 'package:first_project/model/hr/EmployeeModal.dart';
+import 'package:first_project/controllers/asset/AssetListController.dart';
 import 'package:flutter/material.dart';
-import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:get/get.dart';
 
-class SearchEmployee extends SearchDelegate {
-  final employeeListController = Get.put(EmployeListController());
+import '../../model/asset/AssetModal.dart';
+
+class SearchAsset extends SearchDelegate {
+  final assetListController = Get.put(AssetListController());
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -34,8 +35,8 @@ class SearchEmployee extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return FutureBuilder<List<EmployeeModal>>(
-      future: employeeListController.EmployeeList(query: query),
+    return FutureBuilder<List<AssetModal>>(
+      future: assetListController.getAssetList(query: query),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
@@ -49,18 +50,11 @@ class SearchEmployee extends SearchDelegate {
                   backgroundImage: NetworkImage(snapshot.data![index].picture!),
                   backgroundColor: Colors.transparent,
                 ),
-                title: Text(snapshot.data![index].fullName!),
+                title: Text(snapshot.data![index].name!),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(snapshot.data![index].designation!),
-                    Text('Employee No: ' + snapshot.data![index].employeeNo!),
-                    Text(
-                        'Date of Birth: ' + snapshot.data![index].dateOfBirth!),
-                    Text('Date of Joining: ' +
-                        snapshot.data![index].dateOfJoining!),
-                    Text('Mobile: ' + snapshot.data![index].mobile!),
-                    Text('Current Status: ' + snapshot.data![index].status!),
+                    Text('Asset Code: ' + snapshot.data![index].assetCode!),
                   ],
                 ),
               ),

@@ -24,7 +24,9 @@ class AppPages {
         page: () => ProjectList(),
         binding: InitialBinding()),
     GetPage(
-        name: Routes.ASSETS, page: () => AssetList(), binding: InitialBinding())
+        name: Routes.ASSETS,
+        page: () => AssetList(),
+        binding: InitialBinding()),
   ];
 }
 

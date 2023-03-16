@@ -1,16 +1,15 @@
 import 'package:first_project/controllers/auth/UserPreferences.dart';
+import 'package:first_project/model/hr/EmployeeDocumentModel.dart';
 import 'package:get/get.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:first_project/model/asset/AssetModal.dart';
 
-class AssetListController extends GetxController {
+class EmployeeDocumentController extends GetxController {
   UserPreference userPreference = UserPreference();
   var token = '';
-  List<AssetModal> assets = [];
-  List<AssetModal> filterAssets = [];
-
+  List<EmployeeDocumentModel> _employeeDocuments = [];
+  List<EmployeeDocumentModel> filterDocuments = [];
   @override
   void onInit() {
     super.onInit();
@@ -20,35 +19,34 @@ class AssetListController extends GetxController {
   @override
   void onClose() {}
 
-  Future<List<AssetModal>> getAssetList({String? query}) async {
-    if (assets.isNotEmpty) {
+  Future<List<EmployeeDocumentModel>> getEmployeeDocuments(
+      {required String id, String? query}) async {
+    if (_employeeDocuments.isNotEmpty) {
       if (query != null) {
-        filterAssets = assets
+        filterDocuments = _employeeDocuments
             .where((element) => element
                 .toJson()
                 .toString()
                 .toLowerCase()
                 .contains((query.toLowerCase())))
             .toList();
-        return filterAssets;
+        return filterDocuments;
       }
-      return assets;
+      print('From save value');
+      return _employeeDocuments;
     }
     print('fetching from API');
-    print(token);
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ' + token
     };
-    print(requestHeaders);
-    var url = Uri.parse(BaseAPI.baseURL + EndPoints.assetList);
+    var url = Uri.parse(BaseAPI.baseURL + EndPoints.employeeDocuments + id);
     http.Response response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
-      assets = List<AssetModal>.from(
-          responseData.map((model) => AssetModal.fromJson(model))).toList();
-
-      return assets;
+      _employeeDocuments = List<EmployeeDocumentModel>.from(responseData
+          .map((model) => EmployeeDocumentModel.fromJson(model))).toList();
+      return _employeeDocuments;
     } else {
       throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
     }

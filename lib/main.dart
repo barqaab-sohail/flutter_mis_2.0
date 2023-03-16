@@ -1,3 +1,4 @@
+import 'package:first_project/binding/Binding.dart';
 import 'package:first_project/controllers/auth/LoginController.dart';
 import 'package:first_project/routes/PageRoutes.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class MisApp extends StatelessWidget {
         title: 'BARQAAB MIS',
         themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
+        initialBinding: InitialBinding(),
         getPages: AppPages.pages,
         // initialRoute: Routes.DASHBAORD,
         home: FutureBuilder(

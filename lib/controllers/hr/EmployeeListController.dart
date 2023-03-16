@@ -1,11 +1,9 @@
 import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:first_project/modal/hr/EmployeeModal.dart';
-import '../../utils/FileName.dart';
+import 'package:first_project/model/hr/EmployeeModal.dart';
 
 class EmployeListController extends GetxController {
   UserPreference userPreference = UserPreference();
@@ -37,6 +35,7 @@ class EmployeListController extends GetxController {
       return _employees;
     }
     print('fetching from API');
+    await Future.delayed(const Duration(seconds: 2));
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ' + token
@@ -48,15 +47,6 @@ class EmployeListController extends GetxController {
       _employees = List<EmployeeModal>.from(
           responseData.map((model) => EmployeeModal.fromJson(model))).toList();
 
-      if (query != null) {
-        _employees = _employees
-            .where((element) => element
-                .toJson()
-                .toString()
-                .toLowerCase()
-                .contains((query.toLowerCase())))
-            .toList();
-      }
       return _employees;
     } else {
       throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";

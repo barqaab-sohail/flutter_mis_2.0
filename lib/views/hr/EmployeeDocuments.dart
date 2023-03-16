@@ -1,18 +1,19 @@
-import 'package:first_project/controllers/asset/AssetListController.dart';
-import 'package:first_project/controllers/asset/SearchAsset.dart';
-import 'package:first_project/model/asset/AssetModal.dart';
+import 'package:first_project/model/hr/EmployeeDocumentModel.dart';
+import 'package:first_project/model/hr/EmployeeModal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../drawer/Drawer.dart';
+import 'package:first_project/controllers/hr/documents/EmployeeDocumentController.dart';
 
-class AssetList extends StatefulWidget {
-  const AssetList({super.key});
+class EmployeeDocuments extends StatefulWidget {
+  const EmployeeDocuments({super.key});
 
   @override
-  State<AssetList> createState() => _AssetListState();
+  State<EmployeeDocuments> createState() => _EmployeeDocumentsState();
 }
 
-class _AssetListState extends State<AssetList> {
+class _EmployeeDocumentsState extends State<EmployeeDocuments> {
+  final employeeDocumentController = Get.put(EmployeeDocumentController());
+
   @override
   void initState() {
     super.initState();
@@ -20,33 +21,25 @@ class _AssetListState extends State<AssetList> {
 
   @override
   void dispose() {
+    // timer?.cancel();
     super.dispose();
   }
 
-  final assetListController = Get.put(AssetListController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Asset List'),
-          actions: [
-            IconButton(
-              onPressed: () {
-                showSearch(context: context, delegate: SearchAsset());
-              },
-              icon: Icon(Icons.search_sharp),
-            )
-          ],
+          title: Text(Get.arguments[1] + ' Documents'),
         ),
-        drawer: HomeDrawer(),
         body: Column(children: [
           const SizedBox(
             height: 20,
           ),
           Expanded(
-              child: FutureBuilder<List<AssetModal>>(
-            future: assetListController.getAssetList(),
+              child: FutureBuilder<List<EmployeeDocumentModel>>(
+            future: employeeDocumentController.getEmployeeDocuments(
+                id: Get.arguments[0].toString()),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
@@ -55,18 +48,13 @@ class _AssetListState extends State<AssetList> {
                     elevation: 1,
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 20.0,
-                        backgroundImage:
-                            NetworkImage(snapshot.data![index].picture!),
-                        backgroundColor: Colors.transparent,
-                      ),
-                      title: Text(snapshot.data![index].name!),
+                      title: Text(snapshot.data![index].description!),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Asset Code: ' +
-                              snapshot.data![index].assetCode!),
+                          Text('Extension Type: ' +
+                              snapshot.data![index].extension!),
+                          Text('File Szie : ' + snapshot.data![index].size!),
                         ],
                       ),
                     ),
