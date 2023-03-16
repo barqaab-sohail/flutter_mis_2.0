@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'package:first_project/controllers/auth/UserPreferences.dart';
 import 'package:first_project/model/project/ProjectListModal.dart';
 import 'package:get/get.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProjectListController extends GetxController {
-  UserPreference userPreference = UserPreference();
   List<ProjectListModal> _projects = [];
   List<ProjectListModal> fitlerProjects = [];
   @override
@@ -15,8 +14,9 @@ class ProjectListController extends GetxController {
     super.onInit();
   }
 
-  Future<List<ProjectListModal>> ProjectList(
-      {required String authToken, String? query}) async {
+  Future<List<ProjectListModal>> ProjectList({String? query}) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var token = sp.getString('token') ?? '';
     if (_projects.isNotEmpty) {
       if (query != null) {
         fitlerProjects = _projects
@@ -33,10 +33,9 @@ class ProjectListController extends GetxController {
     print("Reading Project List from API");
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
-      'Authorization': 'Bearer ' + authToken
+      'Authorization': 'Bearer ' + token
     };
     var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectList);
-    print(requestHeaders);
     http.Response response = await http.get(url, headers: requestHeaders);
 
     if (response.statusCode == 200) {

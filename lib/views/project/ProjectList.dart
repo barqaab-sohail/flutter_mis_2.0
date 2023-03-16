@@ -15,19 +15,10 @@ class ProjectList extends StatefulWidget {
 
 class _ProjectListState extends State<ProjectList> {
   final projectListController = Get.put(ProjectListController());
-  String token = '';
-
-  loadUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      token = prefs.getString('token')!;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    loadUserData();
   }
 
   @override
@@ -47,7 +38,7 @@ class _ProjectListState extends State<ProjectList> {
         ),
         drawer: HomeDrawer(),
         body: FutureBuilder<List<ProjectListModal>>(
-          future: projectListController.ProjectList(authToken: token),
+          future: projectListController.ProjectList(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(

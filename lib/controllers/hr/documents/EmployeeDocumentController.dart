@@ -5,15 +5,15 @@ import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class EmployeeDocumentController extends GetxController {
   UserPreference userPreference = UserPreference();
-  var token = '';
-  List<EmployeeDocumentModel> _employeeDocuments = [];
+
   List<EmployeeDocumentModel> filterDocuments = [];
   @override
   void onInit() {
     super.onInit();
-    userPreference.getUser().then((value) => {token = value.token!});
   }
 
   @override
@@ -21,21 +21,9 @@ class EmployeeDocumentController extends GetxController {
 
   Future<List<EmployeeDocumentModel>> getEmployeeDocuments(
       {required String id, String? query}) async {
-    if (_employeeDocuments.isNotEmpty) {
-      if (query != null) {
-        filterDocuments = _employeeDocuments
-            .where((element) => element
-                .toJson()
-                .toString()
-                .toLowerCase()
-                .contains((query.toLowerCase())))
-            .toList();
-        return filterDocuments;
-      }
-      print('From save value');
-      return _employeeDocuments;
-    }
-    print('fetching from API');
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var token = sp.getString('token') ?? '';
+
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ' + token
@@ -44,9 +32,19 @@ class EmployeeDocumentController extends GetxController {
     http.Response response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
-      _employeeDocuments = List<EmployeeDocumentModel>.from(responseData
-          .map((model) => EmployeeDocumentModel.fromJson(model))).toList();
-      return _employeeDocuments;
+      List<EmployeeDocumentModel> employeeDocuments =
+          List<EmployeeDocumentModel>.from(responseData
+              .map((model) => EmployeeDocumentModel.fromJson(model))).toList();
+      if (query != null) {
+        employeeDocuments = employeeDocuments
+            .where((element) => element
+                .toJson()
+                .toString()
+                .toLowerCase()
+                .contains((query.toLowerCase())))
+            .toList();
+      }
+      return employeeDocuments;
     } else {
       throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
     }

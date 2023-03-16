@@ -1,8 +1,8 @@
 import 'package:first_project/model/hr/EmployeeDocumentModel.dart';
-import 'package:first_project/model/hr/EmployeeModal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:first_project/controllers/hr/documents/EmployeeDocumentController.dart';
+import 'package:first_project/views/hr/PdfViewer.dart';
 
 class EmployeeDocuments extends StatefulWidget {
   const EmployeeDocuments({super.key});
@@ -48,6 +48,15 @@ class _EmployeeDocumentsState extends State<EmployeeDocuments> {
                     elevation: 1,
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     child: ListTile(
+                      onTap: () {
+                        if (snapshot.data![index].extension == 'pdf') {
+                          String url = snapshot.data![index].path! +
+                              snapshot.data![index].fileName!;
+                          Get.to(() => PdfViewer(), arguments: [url]);
+                        } else {
+                          print('Not PDF File');
+                        }
+                      },
                       title: Text(snapshot.data![index].description!),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
