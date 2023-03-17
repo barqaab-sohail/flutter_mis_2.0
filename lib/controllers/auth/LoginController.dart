@@ -84,6 +84,7 @@ class LoginController extends GetxController {
           await http.post(url, body: jsonEncode(body), headers: headers);
       final json = jsonDecode(response.body);
       if (json['status'] == 200) {
+        List<String> permissions = [];
         UserModal loginUser = UserModal.fromJson(json);
         final SharedPreferences? prefs = await _prefs;
         await prefs?.setString('token', loginUser.token.toString());
@@ -92,6 +93,8 @@ class LoginController extends GetxController {
             'userDesignation', loginUser.userDesignation.toString());
         await prefs?.setString('email', loginUser.email.toString());
         await prefs?.setString('pictureUrl', loginUser.pictureUrl.toString());
+        await prefs?.setStringList(
+            'permissions', loginUser.permissions ?? permissions);
 
         emailController.clear();
         passwordController.clear();
@@ -147,6 +150,9 @@ class LoginController extends GetxController {
       prefs.clear();
       Get.off(() => LoginScreen());
       SystemNavigator.pop();
-    } else {}
+    } else {
+      prefs.clear();
+      Get.off(() => LoginScreen());
+    }
   }
 }

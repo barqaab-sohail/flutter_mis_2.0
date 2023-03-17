@@ -52,10 +52,12 @@ class _EmployeeDocumentsState extends State<EmployeeDocuments> {
                       onTap: () {
                         String url = snapshot.data![index].path! +
                             snapshot.data![index].fileName!;
+                        String fileName = snapshot.data![index].description!;
                         if (snapshot.data![index].extension == 'pdf') {
-                          Get.to(() => PdfViewer(), arguments: [url]);
+                          Get.to(() => PdfViewer(), arguments: [url, fileName]);
                         } else {
-                          Get.to(() => PhotoViewer(), arguments: [url]);
+                          Get.to(() => PhotoViewer(),
+                              arguments: [url, fileName]);
                         }
                       },
                       title: Text(snapshot.data![index].description!),

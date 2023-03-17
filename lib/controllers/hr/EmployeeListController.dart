@@ -4,22 +4,24 @@ import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:first_project/model/hr/EmployeeModal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployeListController extends GetxController {
   UserPreference userPreference = UserPreference();
-  var token = '';
+
   List<EmployeeModal> _employees = [];
   List<EmployeeModal> filterEmployees = [];
   @override
   void onInit() {
     super.onInit();
-    userPreference.getUser().then((value) => {token = value.token!});
   }
 
   @override
   void onClose() {}
 
   Future<List<EmployeeModal>> EmployeeList({String? query}) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var token = sp.getString('token') ?? '';
     if (_employees.isNotEmpty) {
       if (query != null) {
         filterEmployees = _employees

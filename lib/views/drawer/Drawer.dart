@@ -27,16 +27,25 @@ class _HomeDrawerState extends State<HomeDrawer> {
   final employeListController = Get.put(EmployeListController());
 
   UserPreference userPreference = UserPreference();
+  bool isAllowAssets = false;
+  bool isAllowHr = false;
+  bool isAllowProjects = false;
 
   loadUserData() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    List<String> permissions = sp.getStringList('permissions')!;
+    isAllowAssets = permissions.contains('mis assets');
+    isAllowHr = permissions.contains('mis hr');
+    isAllowProjects = permissions.contains('mis projects');
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     setState(() {
       userName = prefs.getString('userName')!;
       userDesignation = prefs.getString('userDesignation')!;
       pictureUrl = prefs.getString('pictureUrl')!;
       email = prefs.getString('email')!;
       token = prefs.getString('token')!;
-      print(prefs.getString('token'));
     });
   }
 
@@ -79,37 +88,39 @@ class _HomeDrawerState extends State<HomeDrawer> {
               Get.to(() => DashBoardScreen());
             },
           ),
-          ListTile(
-            title: const Text('HR'),
-            onTap: () {
-              employeListController.EmployeeList();
-              Get.to(() => EmployeeList());
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              //Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Text('Projects'),
-            onTap: () {
-              Get.to(() => ProjectList());
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              //Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Text('Assets'),
-            onTap: () {
-              Get.to(() => AssetList());
-              // Update the state of the app
-              // ...
-              // Then close the drawer
-              //Navigator.pop(context);
-            },
-          ),
+          isAllowHr
+              ? ListTile(
+                  title: const Text('HR'),
+                  onTap: () {
+                    employeListController.EmployeeList();
+                    Get.to(() => EmployeeList());
+                    // Update the state of the app
+                    // ...
+                    // Then close the drawer
+                    //Navigator.pop(context);
+                  },
+                )
+              : ListTile(),
+          isAllowProjects
+              ? ListTile(
+                  title: const Text('Projects'),
+                  onTap: () {
+                    Get.to(() => ProjectList());
+                    // Update the state of the app
+                    // ...
+                    // Then close the drawer
+                    //Navigator.pop(context);
+                  },
+                )
+              : ListTile(),
+          isAllowAssets
+              ? ListTile(
+                  title: const Text('Assets'),
+                  onTap: () {
+                    Get.to(() => AssetList());
+                  },
+                )
+              : ListTile(),
           Row(
             children: [
               Padding(

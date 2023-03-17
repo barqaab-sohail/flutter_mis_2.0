@@ -1,7 +1,7 @@
 class BaseAPI {
   static final String baseURL = "https://barqaab.pk/hrms/public/api/";
-  //"http://localhost/hrms/public/api/";
 }
+//"http://localhost/hrms/public/api/";
 
 class EndPoints {
   static final String login = 'mis/login';
@@ -10,4 +10,8 @@ class EndPoints {
   static final String employeeDocuments = 'employeeDocuments/';
   static final String projectList = 'powerRunningProjectsTable';
   static final String assetList = 'assets';
+}
+
+class StoragePoint {
+  static final String storage = "https://hrms.barqaab.pk/storage/";
 }
