@@ -95,7 +95,7 @@ class LoginController extends GetxController {
         await prefs?.setString('pictureUrl', loginUser.pictureUrl.toString());
         await prefs?.setStringList(
             'permissions', loginUser.permissions ?? permissions);
-
+        print(loginUser.token);
         emailController.clear();
         passwordController.clear();
 

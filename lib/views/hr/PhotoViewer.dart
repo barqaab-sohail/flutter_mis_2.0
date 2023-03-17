@@ -41,8 +41,7 @@ class _PhotoViewerState extends State<PhotoViewer> {
           ],
         ),
         body: Container(
-            child: Column(children: [
-          Image.network(StoragePoint.storage + Get.arguments[0]),
-        ])));
+          child: Image.network(StoragePoint.storage + Get.arguments[0]),
+        ));
   }
 }

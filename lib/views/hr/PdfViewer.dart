@@ -16,6 +16,25 @@ class PdfViewer extends StatefulWidget {
 }
 
 class _PdfViewerState extends State<PdfViewer> {
+  Widget loadPdf() {
+    return Center(child: const CircularProgressIndicator());
+  }
+
+  late final _bytes;
+  @override
+  void initState() {
+    super.initState();
+    getPdf();
+  }
+
+  getPdf() async {
+    String fileName = Get.arguments[1];
+    final UrlImage = StoragePoint.storage + Get.arguments[0];
+    final url = Uri.parse(UrlImage);
+    final response = await http.get(url);
+    _bytes = response.bodyBytes;
+  }
+
   bool isvisible = false;
   @override
   Widget build(BuildContext context) {
@@ -27,14 +46,10 @@ class _PdfViewerState extends State<PdfViewer> {
             IconButton(
               onPressed: () async {
                 String fileName = Get.arguments[1];
-                final UrlImage = StoragePoint.storage + Get.arguments[0];
-                final url = Uri.parse(UrlImage);
-                final response = await http.get(url);
-                final bytes = response.bodyBytes;
 
                 final temp = await getTemporaryDirectory();
                 final path = '${temp.path}/${fileName}.pdf';
-                File(path).writeAsBytesSync(bytes);
+                File(path).writeAsBytesSync(_bytes);
                 await Share.shareFiles([path], text: fileName);
               },
               icon: Icon(Icons.share),
@@ -42,7 +57,9 @@ class _PdfViewerState extends State<PdfViewer> {
           ],
         ),
         body: Container(
-          child: SfPdfViewer.network(StoragePoint.storage + Get.arguments[0]),
+          child: SfPdfViewer.network(
+            StoragePoint.storage + Get.arguments[0],
+          ),
         ));
   }
 }

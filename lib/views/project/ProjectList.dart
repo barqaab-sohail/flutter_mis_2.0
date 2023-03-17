@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../drawer/Drawer.dart';
+import 'package:first_project/views/project/ProjectDocuments.dart';
 
 class ProjectList extends StatefulWidget {
   const ProjectList({super.key});
@@ -77,6 +78,32 @@ class _ProjectListState extends State<ProjectList> {
                                     'Total Pending Payments: ' +
                                         snapshot.data![index].pendingPayments!,
                                     style: TextStyle(color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  Row(
+                                    children: [
+                                      ElevatedButton(
+                                          onPressed: () {},
+                                          child: Text('Project Summayr')),
+                                      SizedBox(
+                                        width: 50,
+                                      ),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Get.to(ProjectDocument(),
+                                                arguments: [
+                                                  snapshot.data![index].id!,
+                                                  snapshot.data![index]
+                                                      .projectName!,
+                                                ]);
+                                          },
+                                          child: Text('Project Documents'))
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 30,
                                   ),
                                 ]),
                             // trailing: Icon(Icons.train),

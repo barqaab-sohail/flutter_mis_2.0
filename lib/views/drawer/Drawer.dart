@@ -27,16 +27,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
   final employeListController = Get.put(EmployeListController());
 
   UserPreference userPreference = UserPreference();
-  bool isAllowAssets = false;
-  bool isAllowHr = false;
-  bool isAllowProjects = false;
+  bool isAllowAssets = true;
+  bool isAllowHr = true;
+  bool isAllowProjects = true;
 
   loadUserData() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     List<String> permissions = sp.getStringList('permissions')!;
-    isAllowAssets = permissions.contains('mis assets');
-    isAllowHr = permissions.contains('mis hr');
-    isAllowProjects = permissions.contains('mis projects');
+    // isAllowAssets = permissions.contains('mis assets');
+    // isAllowHr = permissions.contains('mis hr');
+    // isAllowProjects = permissions.contains('mis projects');
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
