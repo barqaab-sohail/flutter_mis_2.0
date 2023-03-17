@@ -1,4 +1,5 @@
 import 'package:first_project/model/hr/EmployeeDocumentModel.dart';
+import 'package:first_project/views/hr/PhotoViewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:first_project/controllers/hr/documents/EmployeeDocumentController.dart';
@@ -49,12 +50,12 @@ class _EmployeeDocumentsState extends State<EmployeeDocuments> {
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     child: ListTile(
                       onTap: () {
+                        String url = snapshot.data![index].path! +
+                            snapshot.data![index].fileName!;
                         if (snapshot.data![index].extension == 'pdf') {
-                          String url = snapshot.data![index].path! +
-                              snapshot.data![index].fileName!;
                           Get.to(() => PdfViewer(), arguments: [url]);
                         } else {
-                          print('Not PDF File');
+                          Get.to(() => PhotoViewer(), arguments: [url]);
                         }
                       },
                       title: Text(snapshot.data![index].description!),
