@@ -20,7 +20,8 @@ class _PdfViewerState extends State<PdfViewer> {
     return Center(child: const CircularProgressIndicator());
   }
 
-  late final _bytes;
+  String fileName = '';
+  String path = '';
   @override
   void initState() {
     super.initState();
@@ -28,11 +29,14 @@ class _PdfViewerState extends State<PdfViewer> {
   }
 
   getPdf() async {
-    String fileName = Get.arguments[1];
+    fileName = Get.arguments[1];
     final UrlImage = StoragePoint.storage + Get.arguments[0];
     final url = Uri.parse(UrlImage);
     final response = await http.get(url);
-    _bytes = response.bodyBytes;
+    final bytes = response.bodyBytes;
+    final temp = await getTemporaryDirectory();
+    path = '${temp.path}/${fileName}.pdf';
+    File(path).writeAsBytesSync(bytes);
   }
 
   bool isvisible = false;
@@ -45,11 +49,14 @@ class _PdfViewerState extends State<PdfViewer> {
           actions: [
             IconButton(
               onPressed: () async {
-                String fileName = Get.arguments[1];
-
-                final temp = await getTemporaryDirectory();
-                final path = '${temp.path}/${fileName}.pdf';
-                File(path).writeAsBytesSync(_bytes);
+                // String fileName = Get.arguments[1];
+                // final UrlImage = StoragePoint.storage + Get.arguments[0];
+                // final url = Uri.parse(UrlImage);
+                // final response = await http.get(url);
+                // final bytes = response.bodyBytes;
+                // final temp = await getTemporaryDirectory();
+                // final path = '${temp.path}/${fileName}.pdf';
+                // File(path).writeAsBytesSync(bytes);
                 await Share.shareFiles([path], text: fileName);
               },
               icon: Icon(Icons.share),

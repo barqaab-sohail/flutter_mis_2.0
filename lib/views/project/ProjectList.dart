@@ -82,13 +82,13 @@ class _ProjectListState extends State<ProjectList> {
                                   SizedBox(
                                     height: 30,
                                   ),
-                                  Row(
+                                  Column(
                                     children: [
                                       ElevatedButton(
                                           onPressed: () {},
-                                          child: Text('Project Summayr')),
+                                          child: Text('Project Summary')),
                                       SizedBox(
-                                        width: 50,
+                                        height: 20,
                                       ),
                                       ElevatedButton(
                                           onPressed: () {

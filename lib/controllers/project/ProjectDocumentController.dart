@@ -27,8 +27,11 @@ class ProjectDocumentController extends GetxController {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ' + token
     };
+
     var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectDocuments + id);
     http.Response response = await http.get(url, headers: requestHeaders);
+    print(token);
+    print(url);
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
       List<ProjectDocumentModel> projectDocuments =
