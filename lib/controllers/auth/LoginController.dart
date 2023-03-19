@@ -12,8 +12,6 @@ import 'package:http/http.dart' as http;
 import 'package:first_project/model/UserModel.dart';
 import 'package:first_project/views/dashboard/DashboardView.dart';
 
-import '../../utils/FileName.dart';
-
 class LoginController extends GetxController {
   //GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
