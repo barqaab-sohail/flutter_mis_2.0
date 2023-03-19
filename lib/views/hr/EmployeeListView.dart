@@ -1,10 +1,10 @@
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:first_project/controllers/hr/SearchEmployee.dart';
-import 'package:first_project/model/hr/EmployeeModal.dart';
-import 'package:first_project/views/hr/EmployeeDocuments.dart';
+import 'package:first_project/model/hr/EmployeeModel.dart';
+import 'package:first_project/views/hr/EmployeeDocumentsView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../drawer/Drawer.dart';
+import '../drawer/DrawerView.dart';
 
 class EmployeeList extends StatefulWidget {
   const EmployeeList({super.key});
@@ -64,10 +64,11 @@ class _EmployeeListState extends State<EmployeeList> {
                     child: InteractiveViewer(
                         child: ListTile(
                       onTap: () {
-                        Get.to(EmployeeDocuments(), arguments: [
-                          snapshot.data![index].id!,
-                          snapshot.data![index].fullName!,
-                        ]);
+                        print(snapshot.data![index].picture!);
+                        // Get.to(EmployeeDocuments(), arguments: [
+                        //   snapshot.data![index].id!,
+                        //   snapshot.data![index].fullName!,
+                        // ]);
                       },
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(10),

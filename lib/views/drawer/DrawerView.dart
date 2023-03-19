@@ -1,14 +1,14 @@
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
-import 'package:first_project/views/project/ProjectList.dart';
+import 'package:first_project/views/project/ProjectListView.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/controllers/auth/LoginController.dart';
-import 'package:first_project/views/auth/LoginScreen.dart';
+import 'package:first_project/views/auth/LoginView.dart';
 import 'package:get/get.dart';
-import 'package:first_project/views/hr/EmployeeList.dart';
+import 'package:first_project/views/hr/EmployeeListView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_project/controllers/auth/UserPreferences.dart';
-import '../asset/AssetList.dart';
-import '../dashboard/Dashboard.dart';
+import '../asset/AssetListView.dart';
+import '../dashboard/DashboardView.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({super.key});

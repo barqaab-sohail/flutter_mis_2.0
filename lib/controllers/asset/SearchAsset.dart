@@ -2,7 +2,7 @@ import 'package:first_project/controllers/asset/AssetListController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../model/asset/AssetModal.dart';
+import '../../model/asset/AssetModel.dart';
 
 class SearchAsset extends SearchDelegate {
   final assetListController = Get.put(AssetListController());

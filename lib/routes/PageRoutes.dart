@@ -1,11 +1,11 @@
 import 'package:first_project/main.dart';
-import 'package:first_project/views/asset/AssetList.dart';
+import 'package:first_project/views/asset/AssetListView.dart';
 import 'package:get/get.dart';
 import 'package:first_project/binding/Binding.dart';
-import 'package:first_project/views/dashboard/Dashboard.dart';
-import 'package:first_project/views/auth/LoginScreen.dart';
-import 'package:first_project/views/hr/EmployeeList.dart';
-import 'package:first_project/views/project/ProjectList.dart';
+import 'package:first_project/views/dashboard/DashboardView.dart';
+import 'package:first_project/views/auth/LoginView.dart';
+import 'package:first_project/views/hr/EmployeeListView.dart';
+import 'package:first_project/views/project/ProjectListView.dart';
 
 class AppPages {
   static final pages = [

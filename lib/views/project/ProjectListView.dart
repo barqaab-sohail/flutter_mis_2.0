@@ -1,11 +1,11 @@
 import 'package:first_project/controllers/project/ProjectListController.dart';
 import 'package:first_project/controllers/project/searchProject.dart';
-import 'package:first_project/model/project/ProjectListModal.dart';
+import 'package:first_project/model/project/ProjectListModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../drawer/Drawer.dart';
-import 'package:first_project/views/project/ProjectDocuments.dart';
+import '../drawer/DrawerView.dart';
+import 'package:first_project/views/project/ProjectDocumentsView.dart';
 
 class ProjectList extends StatefulWidget {
   const ProjectList({super.key});

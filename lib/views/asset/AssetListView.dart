@@ -1,9 +1,9 @@
 import 'package:first_project/controllers/asset/AssetListController.dart';
 import 'package:first_project/controllers/asset/SearchAsset.dart';
-import 'package:first_project/model/asset/AssetModal.dart';
+import 'package:first_project/model/asset/AssetModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../drawer/Drawer.dart';
+import '../drawer/DrawerView.dart';
 
 class AssetList extends StatefulWidget {
   const AssetList({super.key});

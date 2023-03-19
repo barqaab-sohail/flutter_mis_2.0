@@ -3,8 +3,8 @@ import 'package:first_project/controllers/auth/LoginController.dart';
 import 'package:first_project/routes/PageRoutes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:first_project/views/dashboard/Dashboard.dart';
-import 'package:first_project/views/auth/LoginScreen.dart';
+import 'package:first_project/views/dashboard/DashboardView.dart';
+import 'package:first_project/views/auth/LoginView.dart';
 
 void main() async {
   runApp(MisApp());

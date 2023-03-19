@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:first_project/model/hr/EmployeeModal.dart';
+import 'package:first_project/model/hr/EmployeeModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployeListController extends GetxController {

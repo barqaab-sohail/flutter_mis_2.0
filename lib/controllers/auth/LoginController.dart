@@ -2,15 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:first_project/utils/api/BaseAPI.dart';
-import 'package:first_project/views/auth/LoginScreen.dart';
+import 'package:first_project/views/auth/LoginView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:first_project/model/UserModal.dart';
-import 'package:first_project/views/dashboard/Dashboard.dart';
+import 'package:first_project/model/UserModel.dart';
+import 'package:first_project/views/dashboard/DashboardView.dart';
 
 import '../../utils/FileName.dart';
 
