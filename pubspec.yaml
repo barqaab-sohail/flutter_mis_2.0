@@ -44,7 +44,7 @@ dependencies:
   syncfusion_flutter_pdfviewer: ^20.4.54
   photo_view: ^0.14.0
   share_plus: ^6.3.1
-  fl_chart: ^0.61.0
+  pie_chart: ^5.3.2
 
 dev_dependencies:
   flutter_test:

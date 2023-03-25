@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../model/project/ProjectListModel.dart';
+import '../../views/project/ProjectDocumentsView.dart';
 
 class SearchProject extends SearchDelegate {
   final projectListController = Get.put(ProjectListController());
@@ -56,6 +57,7 @@ class SearchProject extends SearchDelegate {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: ListTile(
+                        // leading: CircleAvatar(child: Icon(Icons.add)),
                         title: Text(
                           snapshot.data![index].projectName!,
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -78,9 +80,40 @@ class SearchProject extends SearchDelegate {
                                     snapshot.data![index].pendingPayments!,
                                 style: TextStyle(color: Colors.black),
                               ),
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Column(
+                                children: [
+                                  ElevatedButton(
+                                      onPressed: () {},
+                                      child: Text('Project Summary')),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Get.to(ProjectDocument(), arguments: [
+                                          snapshot.data![index].id!,
+                                          snapshot.data![index].projectName!,
+                                        ]);
+                                      },
+                                      child: Text('Project Documents'))
+                                ],
+                              ),
+                              SizedBox(
+                                height: 30,
+                              ),
                             ]),
+                        // trailing: Icon(Icons.train),
                       ),
                     ),
+                    // children: [
+                    //   Text(snapshot.data![index].projectName!),
+                    //   Text(snapshot.data![index].projectType!),
+                    //   Text(snapshot.data![index].paymentReceived!),
+                    //   Text(snapshot.data![index].pendingPayments!),
+                    // ],
                   ]),
                 );
               });
