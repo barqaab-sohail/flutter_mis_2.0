@@ -1,9 +1,8 @@
+import 'package:first_project/controllers/project/searchProjectDocument.dart';
 import 'package:first_project/views/hr/PhotoViewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:first_project/controllers/hr/documents/EmployeeDocumentController.dart';
 import 'package:first_project/views/hr/PdfViewer.dart';
-
 import '../../controllers/project/ProjectDocumentController.dart';
 import '../../model/project/ProjectDocumentModel.dart';
 
@@ -34,6 +33,14 @@ class _ProjectDocumentState extends State<ProjectDocument> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(Get.arguments[1] + ' Documents'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                showSearch(context: context, delegate: SearchProjectDocument());
+              },
+              icon: Icon(Icons.search_sharp),
+            )
+          ],
         ),
         body: Column(children: [
           const SizedBox(

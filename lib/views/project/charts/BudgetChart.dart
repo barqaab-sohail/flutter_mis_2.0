@@ -35,9 +35,8 @@ class _BudgetChartState extends State<BudgetChart> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            chartValuesOptions: ChartValuesOptions(
-              showChartValuesInPercentage: true,
-            ),
+            chartValuesOptions:
+                ChartValuesOptions(showChartValuesInPercentage: true),
           ),
         ),
       ),
