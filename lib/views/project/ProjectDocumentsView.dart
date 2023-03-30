@@ -55,7 +55,7 @@ class _ProjectDocumentState extends State<ProjectDocument> {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (BuildContext context, int index) => Card(
-                    elevation: 1,
+                    elevation: 2,
                     margin: const EdgeInsets.symmetric(vertical: 2),
                     child: ListTile(
                       onTap: () {
