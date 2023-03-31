@@ -1,8 +1,8 @@
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:first_project/views/project/ProjectListView.dart';
+import 'package:first_project/views/project_documents/AllProjectDocumentsView.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/controllers/auth/LoginController.dart';
-import 'package:first_project/views/auth/LoginView.dart';
 import 'package:get/get.dart';
 import 'package:first_project/views/hr/EmployeeListView.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,6 +30,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   bool isAllowAssets = true;
   bool isAllowHr = true;
   bool isAllowProjects = true;
+  bool isAllowProjectDocuments = true;
 
   loadUserData() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
@@ -57,6 +58,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    print(token);
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
@@ -106,10 +108,14 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   title: const Text('Projects'),
                   onTap: () {
                     Get.to(() => ProjectList());
-                    // Update the state of the app
-                    // ...
-                    // Then close the drawer
-                    //Navigator.pop(context);
+                  },
+                )
+              : ListTile(),
+          isAllowProjectDocuments
+              ? ListTile(
+                  title: const Text('Project Documents'),
+                  onTap: () {
+                    Get.to(() => AllProjectDocumentsView());
                   },
                 )
               : ListTile(),

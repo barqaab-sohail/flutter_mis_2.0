@@ -1,9 +1,9 @@
 import 'package:first_project/controllers/project/ProjectListController.dart';
-import 'package:first_project/controllers/project/searchProject.dart';
 import 'package:first_project/model/project/ProjectListModel.dart';
 import 'package:first_project/views/project/charts/BudgetChart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/project/search/searchProject.dart';
 import '../drawer/DrawerView.dart';
 import 'package:first_project/views/project/ProjectDocumentsView.dart';
 

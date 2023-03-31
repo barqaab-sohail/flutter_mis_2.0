@@ -30,8 +30,38 @@ class ProjectDocumentController extends GetxController {
 
     var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectDocuments + id);
     http.Response response = await http.get(url, headers: requestHeaders);
-    print(token);
-    print(url);
+    if (response.statusCode == 200) {
+      Iterable responseData = jsonDecode(response.body);
+      List<ProjectDocumentModel> projectDocuments =
+          List<ProjectDocumentModel>.from(responseData
+              .map((model) => ProjectDocumentModel.fromJson(model))).toList();
+      if (query != null) {
+        projectDocuments = projectDocuments
+            .where((element) => element
+                .toJson()
+                .toString()
+                .toLowerCase()
+                .contains((query.toLowerCase())))
+            .toList();
+      }
+      return projectDocuments;
+    } else {
+      throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
+    }
+  }
+
+  Future<List<ProjectDocumentModel>> getAllProjectDocuments(
+      {String? query}) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var token = sp.getString('token') ?? '';
+
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    };
+
+    var url = Uri.parse(BaseAPI.baseURL + EndPoints.allProjectDocuments);
+    http.Response response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
       List<ProjectDocumentModel> projectDocuments =

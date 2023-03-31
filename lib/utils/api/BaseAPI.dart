@@ -11,6 +11,7 @@ class EndPoints {
   static final String employeeDocuments = 'employeeDocuments/';
   static final String projectDocuments = 'projectDocuments/';
   static final String projectList = 'powerRunningProjectsTable';
+  static final String allProjectDocuments = 'allProjectDocuments';
   static final String assetList = 'assets';
 }
 

@@ -2,8 +2,9 @@ import 'package:first_project/controllers/project/ProjectListController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../model/project/ProjectListModel.dart';
-import '../../views/project/ProjectDocumentsView.dart';
+
+import '../../../model/project/ProjectListModel.dart';
+import '../../../views/project/ProjectDocumentsView.dart';
 
 class SearchProject extends SearchDelegate {
   final projectListController = Get.put(ProjectListController());
