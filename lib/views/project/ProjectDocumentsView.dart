@@ -1,9 +1,9 @@
-import 'package:first_project/controllers/project/searchProjectDocument.dart';
 import 'package:first_project/views/hr/PhotoViewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:first_project/views/hr/PdfViewer.dart';
 import '../../controllers/project/ProjectDocumentController.dart';
+import '../../controllers/project/search/SearchProjectDocument.dart';
 import '../../model/project/ProjectDocumentModel.dart';
 
 class ProjectDocument extends StatefulWidget {
