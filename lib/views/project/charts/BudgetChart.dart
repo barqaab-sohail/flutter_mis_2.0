@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+import '../../../controllers/project/ProjectListController.dart';
 
 class BudgetChart extends StatefulWidget {
   const BudgetChart({super.key});
@@ -9,29 +12,27 @@ class BudgetChart extends StatefulWidget {
 }
 
 class _BudgetChartState extends State<BudgetChart> {
-  Map<String, double> dataMap = {};
-  Future<Map<String, double>> pieChart() async {
-    await Future.delayed(Duration(seconds: 2));
-    dataMap = {
-      "Flutter": 5,
-      "React": 3,
-      "Xamarin": 2,
-      "Ionic": 2,
-    };
-    return dataMap;
-  }
+  final projectListController = Get.find<ProjectListController>();
+
+  Map<String, double> dataMap = {
+    "Flutter": 5,
+    "React": 3,
+    "Xamarin": 2,
+    "Ionic": 2,
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text('Budget Chart'),
+          title: Text(Get.arguments[1] + ' - Budget Chart'),
         ),
         body: Container(
           child: Center(
             child: FutureBuilder(
-                future: pieChart(),
+                future: projectListController.getProejctChart(
+                    id: Get.arguments[0].toString()),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return PieChart(

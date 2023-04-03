@@ -49,4 +49,24 @@ class ProjectListController extends GetxController {
       throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
     }
   }
+
+  Future<void> getProejctChart({required String id}) async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    var token = sp.getString('token') ?? '';
+
+    Map<String, String> requestHeaders = {
+      'Content-type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    };
+
+    var url = Uri.parse(BaseAPI.baseURL + EndPoints.proejctSummaryMM + id);
+    http.Response response = await http.get(url, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+
+      print(responseData);
+    } else {
+      throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
+    }
+  }
 }

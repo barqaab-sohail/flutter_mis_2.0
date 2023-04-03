@@ -127,20 +127,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   },
                 )
               : ListTile(),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: GestureDetector(
-              child: Row(
-                children: [
-                  Icon(Icons.logout),
-                  Text('Logout'),
-                ],
-              ),
-              onTap: () {
-                LoginController.logout(email: email, authToken: token);
-              },
-            ),
-          )
+          ListTile(
+            title: const Text('Logout'),
+            onTap: () {
+              LoginController.logout(email: email, authToken: token);
+            },
+          ),
         ],
       ),
     );

@@ -86,7 +86,11 @@ class _ProjectListState extends State<ProjectList> {
                                     children: [
                                       ElevatedButton(
                                           onPressed: () {
-                                            Get.to(BudgetChart());
+                                            Get.to(BudgetChart(), arguments: [
+                                              snapshot.data![index].id!,
+                                              snapshot
+                                                  .data![index].projectName!,
+                                            ]);
                                           },
                                           child: Text('Project Summary')),
                                       SizedBox(
