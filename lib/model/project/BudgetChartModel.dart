@@ -1,11 +1,10 @@
-
 class BudgetChartModel {
   int? totalCost;
   int? pendingInvoices;
   int? totalInvoice;
   String? lastInvoice;
-  double? budgetUtilization;
-  double? remainingBudget;
+  String? budgetUtilization;
+  String? remainingBudget;
   String? currentProgress;
 
   BudgetChartModel(
@@ -13,7 +12,7 @@ class BudgetChartModel {
       this.pendingInvoices,
       this.totalInvoice,
       this.lastInvoice,
-      double.parse(this.budgetUtilization),
+      this.budgetUtilization,
       this.remainingBudget,
       this.currentProgress});
 
