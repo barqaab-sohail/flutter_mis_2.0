@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:first_project/model/project/BudgetChartModel.dart';
 import 'package:first_project/model/project/ProjectListModel.dart';
 import 'package:get/get.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
@@ -50,7 +51,7 @@ class ProjectListController extends GetxController {
     }
   }
 
-  Future<void> getProejctChart({required String id}) async {
+  Future<BudgetChartModel> getProejctChart({required String id}) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     var token = sp.getString('token') ?? '';
 
@@ -63,8 +64,8 @@ class ProjectListController extends GetxController {
     http.Response response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
-
-      print(responseData);
+      BudgetChartModel data = BudgetChartModel.fromJson(responseData);
+      return data;
     } else {
       throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
     }

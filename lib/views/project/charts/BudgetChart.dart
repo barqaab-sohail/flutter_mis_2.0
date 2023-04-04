@@ -1,7 +1,8 @@
+import 'dart:core';
+import 'package:first_project/model/project/BudgetChartModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pie_chart/pie_chart.dart';
-
 import '../../../controllers/project/ProjectListController.dart';
 
 class BudgetChart extends StatefulWidget {
@@ -14,12 +15,27 @@ class BudgetChart extends StatefulWidget {
 class _BudgetChartState extends State<BudgetChart> {
   final projectListController = Get.find<ProjectListController>();
 
-  Map<String, double> dataMap = {
-    "Flutter": 5,
-    "React": 3,
-    "Xamarin": 2,
-    "Ionic": 2,
-  };
+  Map<String, double> dataMap = {};
+  // {
+  //   "Flutter": 5,
+  //   "React": 3,
+  //   "Xamarin": 2,
+  //   "Ionic": 2,
+  // };
+
+  Future<Map<String, double>> getChartData() async {
+    BudgetChartModel data = await projectListController.getProejctChart(
+        id: Get.arguments[0].toString());
+    dataMap = {
+      "Budget Utilization": data.budgetUtilization!,
+      "Remaining Budget": data.remainingBudget!,
+    };
+    if (dataMap["Budget Utilization"] == 0) {
+      print("No Utilization");
+    }
+    ;
+    return dataMap;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +47,7 @@ class _BudgetChartState extends State<BudgetChart> {
         body: Container(
           child: Center(
             child: FutureBuilder(
-                future: projectListController.getProejctChart(
-                    id: Get.arguments[0].toString()),
+                future: getChartData(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return PieChart(

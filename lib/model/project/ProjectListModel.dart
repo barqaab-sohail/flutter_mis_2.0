@@ -18,7 +18,6 @@ class ProjectListModal {
       this.projectName,
       this.paymentReceived,
       this.pendingPayments,
-      this.budgetUtilization,
       this.projectProgress,
       this.latestInvoiceMonth,
       this.latestExpenditureMonth,
@@ -31,7 +30,6 @@ class ProjectListModal {
     projectName = json['projectName'];
     paymentReceived = json['paymentReceived'];
     pendingPayments = json['pendingPayments'];
-    budgetUtilization = json['budgetUtilization'];
     projectProgress = json['projectProgress'];
     latestInvoiceMonth = json['latestInvoiceMonth'];
     latestExpenditureMonth = json['latestExpenditureMonth'];
@@ -46,7 +44,6 @@ class ProjectListModal {
     data['projectName'] = this.projectName;
     data['paymentReceived'] = this.paymentReceived;
     data['pendingPayments'] = this.pendingPayments;
-    data['budgetUtilization'] = this.budgetUtilization;
     data['projectProgress'] = this.projectProgress;
     data['latestInvoiceMonth'] = this.latestInvoiceMonth;
     data['latestExpenditureMonth'] = this.latestExpenditureMonth;
