@@ -15,15 +15,17 @@ class BudgetChart extends StatefulWidget {
 }
 
 class _BudgetChartState extends State<BudgetChart> {
+  late int showingTooltip;
+
+  @override
+  void initState() {
+    showingTooltip = -1;
+    super.initState();
+  }
+
   final projectListController = Get.find<ProjectListController>();
 
   Map<String, double> dataMap = {};
-  // {
-  //   "Flutter": 5,
-  //   "React": 3,
-  //   "Xamarin": 2,
-  //   "Ionic": 2,
-  // };
 
   Future<Map<String, double>> getChartData() async {
     BudgetChartModel data = await projectListController.getProejctChart(
@@ -104,6 +106,24 @@ class _BudgetChartState extends State<BudgetChart> {
                         );
                       } else if (dataMap["Budget Utilization"] == 0.0) {
                         return Center(child: Text("No Utilization Found"));
+                      } else
+                        return CircularProgressIndicator();
+                    }),
+              )),
+              Expanded(
+                  child: Center(
+                child: FutureBuilder(
+                    future: getBarChartData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 30),
+                          child: charts.BarChart(
+                            series,
+                            animate: true,
+                          ),
+                        );
                       } else
                         return CircularProgressIndicator();
                     }),
