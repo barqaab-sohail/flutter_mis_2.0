@@ -130,11 +130,43 @@ class _HomeDrawerState extends State<HomeDrawer> {
           ListTile(
             title: const Text('Logout'),
             onTap: () {
-              LoginController.logout(email: email, authToken: token);
+              Get.defaultDialog(
+                title: "Confirmation",
+                content: getContent(),
+                barrierDismissible: false,
+                radius: 50.0,
+                confirm: confirmBtn(email, token),
+                cancel: cancelBtn(),
+              );
+              //LoginController.logout(email: email, authToken: token);
             },
           ),
         ],
       ),
     );
   }
+}
+
+Widget getContent() {
+  return Column(
+    children: [
+      Text("Are you sure to logout"),
+    ],
+  );
+}
+
+Widget confirmBtn(String email, String token) {
+  return ElevatedButton(
+      onPressed: () {
+        LoginController.logout(email: email, authToken: token);
+      },
+      child: Text("Confirm"));
+}
+
+Widget cancelBtn() {
+  return ElevatedButton(
+      onPressed: () {
+        Get.back();
+      },
+      child: Text("Cancel"));
 }

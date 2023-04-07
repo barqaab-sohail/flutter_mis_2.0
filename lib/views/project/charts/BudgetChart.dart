@@ -45,11 +45,11 @@ class _BudgetChartState extends State<BudgetChart> {
 
     List<BarChartModel> data1 = [
       BarChartModel(
-          description: "Total Cost",
+          description: "T Cost",
           value: data.totalCost!,
           color: charts.ColorUtil.fromDartColor(Colors.red)),
       BarChartModel(
-          description: "Total Invoice",
+          description: "T Invoice",
           value: data.totalInvoice!,
           color: charts.ColorUtil.fromDartColor(Colors.blue)),
       BarChartModel(
@@ -95,7 +95,7 @@ class _BudgetChartState extends State<BudgetChart> {
                           chartRadius: MediaQuery.of(context).size.width / 1.7,
                           legendOptions: LegendOptions(
                             showLegendsInRow: false,
-                            legendPosition: LegendPosition.right,
+                            legendPosition: LegendPosition.bottom,
                             showLegends: true,
                             legendTextStyle: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -106,24 +106,6 @@ class _BudgetChartState extends State<BudgetChart> {
                         );
                       } else if (dataMap["Budget Utilization"] == 0.0) {
                         return Center(child: Text("No Utilization Found"));
-                      } else
-                        return CircularProgressIndicator();
-                    }),
-              )),
-              Expanded(
-                  child: Center(
-                child: FutureBuilder(
-                    future: getBarChartData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 30),
-                          child: charts.BarChart(
-                            series,
-                            animate: true,
-                          ),
-                        );
                       } else
                         return CircularProgressIndicator();
                     }),

@@ -92,7 +92,7 @@ class _ProjectListState extends State<ProjectList> {
                                                   .data![index].projectName!,
                                             ]);
                                           },
-                                          child: Text('Project Summary')),
+                                          child: Text('Project Charts')),
                                       SizedBox(
                                         height: 20,
                                       ),
