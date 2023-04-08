@@ -1,3 +1,4 @@
+import 'package:first_project/main.dart';
 import 'package:first_project/views/hr/PhotoViewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,7 @@ class _ProjectDocumentState extends State<ProjectDocument> {
 
   @override
   Widget build(BuildContext context) {
+    projectId = Get.arguments[0];
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,

@@ -10,6 +10,8 @@ void main() async {
   runApp(MisApp());
 }
 
+var projectId;
+
 class MisApp extends StatelessWidget {
   const MisApp({super.key});
 

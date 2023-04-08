@@ -1,3 +1,4 @@
+import 'package:first_project/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,8 +42,8 @@ class SearchProjectDocument extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder<List<ProjectDocumentModel>>(
-      future:
-          projectDocumentController.getProjectDocuments(id: '43', query: query),
+      future: projectDocumentController.getProjectDocuments(
+          id: projectId.toString(), query: query),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(

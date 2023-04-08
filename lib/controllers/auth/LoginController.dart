@@ -1,20 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:first_project/services/base_client.dart';
+import 'package:first_project/services/app_exceptions.dart';
+import 'package:first_project/helper/dialog_helper.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:first_project/views/auth/LoginView.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:first_project/model/UserModel.dart';
 import 'package:first_project/views/dashboard/DashboardView.dart';
+import 'package:first_project/controllers/base_controller.dart';
 
 import '../../utils/FileName.dart';
 
-class LoginController extends GetxController {
+class LoginController extends GetxController with BaseController {
   //GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   late TextEditingController emailController, passwordController;
@@ -65,8 +67,48 @@ class LoginController extends GetxController {
   //   }
   //   loginFormKey.currentState!.save();
   // }
+  void checkLogin({@required formkey}) async {
+    showLoading('Please wait ...');
+    final isValid = formkey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    formkey.currentState!.save();
+
+    Map body = {
+      'email': emailController.text.trim(),
+      'password': passwordController.text
+    };
+
+    var response = await BaseClient()
+        .post(BaseAPI.baseURL, EndPoints.login, body)
+        .catchError((error) {
+      if (error is BadRequestException) {
+        var apiError = json.decode(error.message!);
+        DialogHelper.showErroDialog(description: apiError["reason"]);
+      } else {
+        handleError(error);
+      }
+    });
+    if (response == null) return;
+    hideLoading();
+    final json = jsonDecode(response);
+    UserModal loginUser = UserModal.fromJson(json);
+    final SharedPreferences? prefs = await _prefs;
+    await prefs?.setString('token', loginUser.token.toString());
+    await prefs?.setString('userName', loginUser.userName.toString());
+    await prefs?.setString(
+        'userDesignation', loginUser.userDesignation.toString());
+    await prefs?.setString('email', loginUser.email.toString());
+    await prefs?.setString('pictureUrl', loginUser.pictureUrl.toString());
+    await prefs?.setStringList('permissions', loginUser.permissions ?? []);
+    emailController.clear();
+    passwordController.clear();
+    Get.to(() => DashBoardScreen());
+  }
 
   Future<void> loginWithEmail({@required formkey}) async {
+    showLoading('Please wait ...');
     final isValid = formkey.currentState!.validate();
     if (!isValid) {
       return;
@@ -83,6 +125,7 @@ class LoginController extends GetxController {
       http.Response response =
           await http.post(url, body: jsonEncode(body), headers: headers);
       final json = jsonDecode(response.body);
+
       if (json['status'] == 200) {
         List<String> permissions = [];
         UserModal loginUser = UserModal.fromJson(json);
