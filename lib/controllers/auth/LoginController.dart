@@ -14,8 +14,6 @@ import 'package:first_project/model/UserModel.dart';
 import 'package:first_project/views/dashboard/DashboardView.dart';
 import 'package:first_project/controllers/base_controller.dart';
 
-import '../../utils/FileName.dart';
-
 class LoginController extends GetxController with BaseController {
   //GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
@@ -60,13 +58,6 @@ class LoginController extends GetxController with BaseController {
     return null;
   }
 
-  // void checkLogin() {
-  //   final isValid = loginFormKey.currentState!.validate();
-  //   if (!isValid) {
-  //     return;
-  //   }
-  //   loginFormKey.currentState!.save();
-  // }
   void checkLogin({@required formkey}) async {
     showLoading('Please wait ...');
     final isValid = formkey.currentState!.validate();
@@ -84,7 +75,7 @@ class LoginController extends GetxController with BaseController {
         .post(BaseAPI.baseURL, EndPoints.login, body)
         .catchError((error) {
       if (error is BadRequestException) {
-        var apiError = json.decode(error.message!);
+        var apiError = jsonDecode(error.message!);
         DialogHelper.showErroDialog(description: apiError["reason"]);
       } else {
         handleError(error);
@@ -93,20 +84,25 @@ class LoginController extends GetxController with BaseController {
     if (response == null) return;
     hideLoading();
     final json = jsonDecode(response);
-    UserModal loginUser = UserModal.fromJson(json);
-    final SharedPreferences? prefs = await _prefs;
-    await prefs?.setString('token', loginUser.token.toString());
-    await prefs?.setString('userName', loginUser.userName.toString());
-    await prefs?.setString(
-        'userDesignation', loginUser.userDesignation.toString());
-    await prefs?.setString('email', loginUser.email.toString());
-    await prefs?.setString('pictureUrl', loginUser.pictureUrl.toString());
-    await prefs?.setStringList('permissions', loginUser.permissions ?? []);
-    emailController.clear();
-    passwordController.clear();
-    Get.to(() => DashBoardScreen());
+    if (json["status"] == 200) {
+      UserModal loginUser = UserModal.fromJson(json);
+      final SharedPreferences? prefs = await _prefs;
+      await prefs?.setString('token', loginUser.token.toString());
+      await prefs?.setString('userName', loginUser.userName.toString());
+      await prefs?.setString(
+          'userDesignation', loginUser.userDesignation.toString());
+      await prefs?.setString('email', loginUser.email.toString());
+      await prefs?.setString('pictureUrl', loginUser.pictureUrl.toString());
+      await prefs?.setStringList('permissions', loginUser.permissions ?? []);
+      emailController.clear();
+      passwordController.clear();
+      Get.to(() => DashBoardScreen());
+    } else {
+      Get.back();
+    }
   }
 
+  //Old Function Not used
   Future<void> loginWithEmail({@required formkey}) async {
     showLoading('Please wait ...');
     final isValid = formkey.currentState!.validate();
@@ -138,7 +134,7 @@ class LoginController extends GetxController with BaseController {
         await prefs?.setString('pictureUrl', loginUser.pictureUrl.toString());
         await prefs?.setStringList(
             'permissions', loginUser.permissions ?? permissions);
-        print(loginUser.token);
+
         emailController.clear();
         passwordController.clear();
 
@@ -162,13 +158,6 @@ class LoginController extends GetxController with BaseController {
     }
   }
 
-  getStringValuesSF() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
-    String stringValue = prefs.getString('userName').toString();
-    return stringValue;
-  }
-
   static Future<bool> isLogin() async {
     var any = await SharedPreferences.getInstance();
     if (any.getString('token') == null) {
@@ -188,7 +177,7 @@ class LoginController extends GetxController with BaseController {
     var url = Uri.parse(BaseAPI.baseURL + EndPoints.logout);
     http.Response response =
         await http.post(url, headers: requestHeaders, body: body);
-    print(response.statusCode);
+
     if (response.statusCode == 200) {
       prefs.clear();
       Get.off(() => LoginScreen());

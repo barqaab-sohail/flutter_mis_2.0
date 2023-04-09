@@ -27,17 +27,18 @@ class _HomeDrawerState extends State<HomeDrawer> {
   final employeListController = Get.put(EmployeListController());
 
   UserPreference userPreference = UserPreference();
-  bool isAllowAssets = true;
-  bool isAllowHr = true;
-  bool isAllowProjects = true;
-  bool isAllowProjectDocuments = true;
+  bool isAllowAssets = false;
+  bool isAllowHr = false;
+  bool isAllowProjects = false;
+  bool isAllowProjectDocuments = false;
 
   loadUserData() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     List<String> permissions = sp.getStringList('permissions')!;
-    // isAllowAssets = permissions.contains('mis assets');
-    // isAllowHr = permissions.contains('mis hr');
-    // isAllowProjects = permissions.contains('mis projects');
+    isAllowHr = permissions.contains('mis hr');
+    isAllowProjects = permissions.contains('mis projects');
+    isAllowProjectDocuments = permissions.contains('mis all projects');
+    isAllowAssets = permissions.contains('mis assets');
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -58,7 +59,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    print(token);
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
@@ -90,43 +90,39 @@ class _HomeDrawerState extends State<HomeDrawer> {
               Get.to(() => DashBoardScreen());
             },
           ),
-          isAllowHr
-              ? ListTile(
-                  title: const Text('HR'),
-                  onTap: () {
-                    employeListController.EmployeeList();
-                    Get.to(() => EmployeeList());
-                    // Update the state of the app
-                    // ...
-                    // Then close the drawer
-                    //Navigator.pop(context);
-                  },
-                )
-              : ListTile(),
-          isAllowProjects
-              ? ListTile(
-                  title: const Text('Projects'),
-                  onTap: () {
-                    Get.to(() => ProjectList());
-                  },
-                )
-              : ListTile(),
-          isAllowProjectDocuments
-              ? ListTile(
-                  title: const Text('Project Documents'),
-                  onTap: () {
-                    Get.to(() => AllProjectDocumentsView());
-                  },
-                )
-              : ListTile(),
-          isAllowAssets
-              ? ListTile(
-                  title: const Text('Assets'),
-                  onTap: () {
-                    Get.to(() => AssetList());
-                  },
-                )
-              : ListTile(),
+          ListTile(
+            title: const Text('HR'),
+            onTap: () {
+              employeListController.EmployeeList();
+              isAllowHr ? Get.to(() => EmployeeList()) : unAuthorized();
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              //Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Projects'),
+            onTap: () {
+              isAllowProjects ? Get.to(() => ProjectList()) : unAuthorized();
+              ;
+            },
+          ),
+          ListTile(
+            title: const Text('Project Documents'),
+            onTap: () {
+              isAllowProjectDocuments
+                  ? Get.to(() => AllProjectDocumentsView())
+                  : unAuthorized();
+              ;
+            },
+          ),
+          ListTile(
+            title: const Text('Assets'),
+            onTap: () {
+              isAllowAssets ? Get.to(() => AssetList()) : unAuthorized();
+            },
+          ),
           ListTile(
             title: const Text('Logout'),
             onTap: () {
@@ -169,4 +165,17 @@ Widget cancelBtn() {
         Get.back();
       },
       child: Text("Cancel"));
+}
+
+unAuthorized() {
+  Get.defaultDialog(
+    title: "Error",
+    middleText: "You are not Authorized",
+    textCancel: "Cancel",
+    cancelTextColor: Colors.white,
+    buttonColor: Colors.white,
+    backgroundColor: Colors.red,
+    titleStyle: TextStyle(color: Colors.white),
+    middleTextStyle: TextStyle(color: Colors.white),
+  );
 }

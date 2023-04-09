@@ -7,6 +7,9 @@ import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
+
+import '../../helper/dialog_helper.dart';
 
 class PdfViewer extends StatefulWidget {
   const PdfViewer({super.key});
@@ -16,16 +19,12 @@ class PdfViewer extends StatefulWidget {
 }
 
 class _PdfViewerState extends State<PdfViewer> {
-  Widget loadPdf() {
-    return Center(child: const CircularProgressIndicator());
-  }
-
   String fileName = '';
   String path = '';
   @override
   void initState() {
     super.initState();
-    getPdf();
+    //getPdf();
   }
 
   getPdf() async {
@@ -39,6 +38,14 @@ class _PdfViewerState extends State<PdfViewer> {
     File(path).writeAsBytesSync(bytes);
   }
 
+  showLoading([String? message]) {
+    DialogHelper.showLoading(message);
+  }
+
+  hideLoading() {
+    DialogHelper.hideLoading();
+  }
+
   bool isvisible = false;
   @override
   Widget build(BuildContext context) {
@@ -49,14 +56,16 @@ class _PdfViewerState extends State<PdfViewer> {
           actions: [
             IconButton(
               onPressed: () async {
-                // String fileName = Get.arguments[1];
-                // final UrlImage = StoragePoint.storage + Get.arguments[0];
-                // final url = Uri.parse(UrlImage);
-                // final response = await http.get(url);
-                // final bytes = response.bodyBytes;
-                // final temp = await getTemporaryDirectory();
-                // final path = '${temp.path}/${fileName}.pdf';
-                // File(path).writeAsBytesSync(bytes);
+                String fileName = Get.arguments[1];
+                final UrlImage = StoragePoint.storage + Get.arguments[0];
+                showLoading('Please wait ...');
+                final url = Uri.parse(UrlImage);
+                final response = await http.get(url);
+                final bytes = response.bodyBytes;
+                final temp = await getTemporaryDirectory();
+                final path = '${temp.path}/${fileName}.pdf';
+                File(path).writeAsBytesSync(bytes);
+                hideLoading();
                 await Share.shareFiles([path], text: fileName);
               },
               icon: Icon(Icons.share),
@@ -64,9 +73,12 @@ class _PdfViewerState extends State<PdfViewer> {
           ],
         ),
         body: Container(
-          child: SfPdfViewer.network(
-            StoragePoint.storage + Get.arguments[0],
-          ),
-        ));
+            child: PDF().cachedFromUrl(
+          StoragePoint.storage + Get.arguments[0],
+          placeholder: (progress) => Center(child: Text('$progress %')),
+          errorWidget: (error) => Center(child: Text(error.toString())),
+        )
+            //SfPdfViewer.network(StoragePoint.storage + Get.arguments[0],),
+            ));
   }
 }

@@ -31,14 +31,14 @@ class ProjectListController extends GetxController {
       }
       return _projects;
     }
-    print("Reading Project List from API");
+
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
       'Authorization': 'Bearer ' + token
     };
     var url = Uri.parse(BaseAPI.baseURL + EndPoints.projectList);
     http.Response response = await http.get(url, headers: requestHeaders);
-    print(token);
+
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
       _projects = List<ProjectListModal>.from(

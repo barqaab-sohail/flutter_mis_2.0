@@ -24,7 +24,7 @@ class DialogHelper {
                 onPressed: () {
                   if (Get.isDialogOpen!) Get.back();
                 },
-                child: Text('Okay'),
+                child: Text('Ok'),
               ),
             ],
           ),

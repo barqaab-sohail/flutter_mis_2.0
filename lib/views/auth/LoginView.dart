@@ -106,7 +106,7 @@ class _LoginScreen1State extends State<LoginScreen> {
                                             Colors.black),
                                   ),
                                   onPressed: () {
-                                    loginController.loginWithEmail(
+                                    loginController.checkLogin(
                                         formkey: _formKey);
                                   },
                                   child: Text('Login'),

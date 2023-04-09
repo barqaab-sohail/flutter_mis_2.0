@@ -33,10 +33,10 @@ class EmployeListController extends GetxController {
             .toList();
         return filterEmployees;
       }
-      print('From save value');
+
       return _employees;
     }
-    print('fetching from API');
+
     await Future.delayed(const Duration(seconds: 2));
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',

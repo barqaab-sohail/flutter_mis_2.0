@@ -5,6 +5,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:first_project/utils/api/BaseAPI.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+import '../../helper/dialog_helper.dart';
 
 class PhotoViewer extends StatefulWidget {
   const PhotoViewer({super.key});
@@ -14,7 +17,14 @@ class PhotoViewer extends StatefulWidget {
 }
 
 class _PhotoViewerState extends State<PhotoViewer> {
-  bool isLoading = true;
+  showLoading([String? message]) {
+    DialogHelper.showLoading(message);
+  }
+
+  hideLoading() {
+    DialogHelper.hideLoading();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,13 +37,13 @@ class _PhotoViewerState extends State<PhotoViewer> {
                 String fileName = Get.arguments[1];
                 final UrlImage = StoragePoint.storage + Get.arguments[0];
                 final url = Uri.parse(UrlImage);
+                showLoading('Please wait ...');
                 final response = await http.get(url);
                 final bytes = response.bodyBytes;
-
                 final temp = await getTemporaryDirectory();
                 final path = '${temp.path}/image.jpg';
                 File(path).writeAsBytesSync(bytes);
-                isLoading = false;
+                hideLoading();
                 await Share.shareFiles([path], text: fileName);
               },
               icon: Icon(Icons.share),
@@ -41,7 +51,13 @@ class _PhotoViewerState extends State<PhotoViewer> {
           ],
         ),
         body: Container(
-          child: Image.network(StoragePoint.storage + Get.arguments[0]),
+          child: CachedNetworkImage(
+            imageUrl: StoragePoint.storage + Get.arguments[0],
+            placeholder: (context, url) =>
+                Center(child: new CircularProgressIndicator()),
+            errorWidget: (context, url, error) => new Icon(Icons.error),
+          ),
+          // Image.network(StoragePoint.storage + Get.arguments[0]),
         ));
   }
 }
