@@ -54,6 +54,18 @@ class _PdfViewerState extends State<PdfViewer> {
     );
   }
 
+  Future<File> getPdfFile() async {
+    String fileName = Get.arguments[1];
+    final UrlImage = StoragePoint.storage + Get.arguments[0];
+    final url = Uri.parse(UrlImage);
+    final response = await http.get(url);
+    final bytes = response.bodyBytes;
+    final temp = await getTemporaryDirectory();
+    path = '${temp.path}/${fileName}.pdf';
+    File(path).writeAsBytesSync(bytes);
+    return File(path);
+  }
+
   bool isvisible = false;
   @override
   Widget build(BuildContext context) {
@@ -64,23 +76,32 @@ class _PdfViewerState extends State<PdfViewer> {
           actions: [
             IconButton(
               onPressed: () async {
-                String fileName = Get.arguments[1];
-                final UrlImage = StoragePoint.storage + Get.arguments[0];
-                showLoading('Please wait ...');
-                final url = Uri.parse(UrlImage);
-                final response = await http.get(url);
-                final bytes = response.bodyBytes;
-                final temp = await getTemporaryDirectory();
-                final path = '${temp.path}/${fileName}.pdf';
-                File(path).writeAsBytesSync(bytes);
-                hideLoading();
+                // String fileName = Get.arguments[1];
+                // final UrlImage = StoragePoint.storage + Get.arguments[0];
+                // showLoading('Please wait ...');
+                // // final url = Uri.parse(UrlImage);
+                // // final response = await http.get(url);
+                // // final bytes = response.bodyBytes;
+                // // final temp = await getTemporaryDirectory();
+                // // final path = '${temp.path}/${fileName}.pdf';
+                // // print(path);
+                // File(path).writeAsBytesSync(bytes);
+                // hideLoading();
                 await Share.shareFiles([path], text: fileName);
               },
               icon: Icon(Icons.share),
             )
           ],
         ),
-        body: Container(child: pdfView()
+        body: Container(
+            child: FutureBuilder(
+                future: getPdfFile(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return SfPdfViewer.file(snapshot.data!);
+                  }
+                  return Center(child: const CircularProgressIndicator());
+                })
             //     PDF().cachedFromUrl(
             //   StoragePoint.storage + Get.arguments[0],
             //   placeholder: (progress) => Center(child: Text('$progress %')),
