@@ -7,7 +7,8 @@ import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
+
+//import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
 import '../../helper/dialog_helper.dart';
 
@@ -24,6 +25,7 @@ class _PdfViewerState extends State<PdfViewer> {
   @override
   void initState() {
     super.initState();
+
     //getPdf();
   }
 
@@ -44,6 +46,12 @@ class _PdfViewerState extends State<PdfViewer> {
 
   hideLoading() {
     DialogHelper.hideLoading();
+  }
+
+  Widget pdfView() {
+    return SfPdfViewer.network(
+      StoragePoint.storage + Get.arguments[0],
+    );
   }
 
   bool isvisible = false;
@@ -72,13 +80,13 @@ class _PdfViewerState extends State<PdfViewer> {
             )
           ],
         ),
-        body: Container(
-            child: PDF().cachedFromUrl(
-          StoragePoint.storage + Get.arguments[0],
-          placeholder: (progress) => Center(child: Text('$progress %')),
-          errorWidget: (error) => Center(child: Text(error.toString())),
-        )
-            //SfPdfViewer.network(StoragePoint.storage + Get.arguments[0],),
+        body: Container(child: pdfView()
+            //     PDF().cachedFromUrl(
+            //   StoragePoint.storage + Get.arguments[0],
+            //   placeholder: (progress) => Center(child: Text('$progress %')),
+            //   errorWidget: (error) => Center(child: Text(error.toString())),
+            // )
+
             ));
   }
 }
