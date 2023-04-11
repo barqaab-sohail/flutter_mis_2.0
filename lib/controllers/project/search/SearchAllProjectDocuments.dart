@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../model/project/ProjectDocumentModel.dart';
-import '../../../views/hr/PdfViewer.dart';
-import '../../../views/hr/PhotoViewer.dart';
+import '../../../views/hr/pdf_viewer.dart';
+import '../../../views/hr/photo_viewer.dart';
 import '../ProjectDocumentController.dart';
 
 class SearchAllProjectDocument extends SearchDelegate {

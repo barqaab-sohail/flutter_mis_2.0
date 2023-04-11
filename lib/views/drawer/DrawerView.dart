@@ -4,7 +4,7 @@ import 'package:first_project/views/project_documents/AllProjectDocumentsView.da
 import 'package:flutter/material.dart';
 import 'package:first_project/controllers/auth/LoginController.dart';
 import 'package:get/get.dart';
-import 'package:first_project/views/hr/EmployeeListView.dart';
+import 'package:first_project/views/hr/employee_list_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_project/controllers/auth/UserPreferences.dart';
 import '../asset/AssetListView.dart';

@@ -1,8 +1,8 @@
 import 'package:first_project/main.dart';
-import 'package:first_project/views/hr/PhotoViewer.dart';
+import 'package:first_project/views/hr/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:first_project/views/hr/PdfViewer.dart';
+import 'package:first_project/views/hr/pdf_viewer.dart';
 import '../../controllers/project/ProjectDocumentController.dart';
 import '../../controllers/project/search/SearchProjectDocument.dart';
 import '../../model/project/ProjectDocumentModel.dart';

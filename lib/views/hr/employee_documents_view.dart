@@ -1,9 +1,9 @@
 import 'package:first_project/model/hr/EmployeeDocumentModel.dart';
-import 'package:first_project/views/hr/PhotoViewer.dart';
+import 'package:first_project/views/hr/photo_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:first_project/controllers/hr/documents/EmployeeDocumentController.dart';
-import 'package:first_project/views/hr/PdfViewer.dart';
+import 'package:first_project/views/hr/pdf_viewer.dart';
 
 class EmployeeDocuments extends StatefulWidget {
   const EmployeeDocuments({super.key});

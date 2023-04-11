@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../../controllers/project/ProjectDocumentController.dart';
 import '../../controllers/project/search/SearchProjectDocument.dart';
 import '../../model/project/ProjectDocumentModel.dart';
-import '../hr/PdfViewer.dart';
-import '../hr/PhotoViewer.dart';
+import '../hr/pdf_viewer.dart';
+import '../hr/photo_viewer.dart';
 
 class AllProjectDocumentsView extends StatefulWidget {
   const AllProjectDocumentsView({super.key});

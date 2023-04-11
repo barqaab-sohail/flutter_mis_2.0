@@ -1,10 +1,12 @@
 import 'package:first_project/controllers/auth/UserPreferences.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:first_project/model/hr/EmployeeModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../views/hr/employee_documents_view.dart';
 
 class EmployeListController extends GetxController {
   UserPreference userPreference = UserPreference();
@@ -18,6 +20,54 @@ class EmployeListController extends GetxController {
 
   @override
   void onClose() {}
+
+  Widget getEmployeeListWidget({String? query = null}) {
+    return FutureBuilder<List<EmployeeModal>>(
+      future: EmployeeList(query: query),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (BuildContext context, int index) => Card(
+              elevation: 1,
+              margin: const EdgeInsets.symmetric(vertical: 2),
+              child: ListTile(
+                onTap: () {
+                  Get.to(EmployeeDocuments(), arguments: [
+                    snapshot.data![index].id!,
+                    snapshot.data![index].fullName!,
+                  ]);
+                },
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(snapshot.data![index].picture!,
+                      fit: BoxFit.cover),
+                ),
+                title: Text(snapshot.data![index].fullName!),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(snapshot.data![index].designation!),
+                    Text('Employee No: ' + snapshot.data![index].employeeNo!),
+                    Text(
+                        'Date of Birth: ' + snapshot.data![index].dateOfBirth!),
+                    Text('Date of Joining: ' +
+                        snapshot.data![index].dateOfJoining!),
+                    Text('Mobile: ' + snapshot.data![index].mobile!),
+                    Text('Current Status: ' + snapshot.data![index].status!),
+                  ],
+                ),
+              ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        }
+        // By default show a loading spinner.
+        return Center(child: const CircularProgressIndicator());
+      },
+    );
+  }
 
   Future<List<EmployeeModal>> EmployeeList({String? query}) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
