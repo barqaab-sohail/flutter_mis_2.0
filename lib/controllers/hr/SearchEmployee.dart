@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:first_project/controllers/hr/EmployeeListController.dart';
 import 'package:get/get.dart';
 
+import '../../views/hr/EmployeeDocumentsView.dart';
+
 class SearchEmployee extends SearchDelegate {
   final employeeListController = Get.put(EmployeListController());
 
@@ -35,7 +37,7 @@ class SearchEmployee extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     return FutureBuilder<List<EmployeeModal>>(
-      future: employeeListController.EmployeeList(query: query),
+      future: employeeListController.EmployeeList(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
@@ -44,10 +46,16 @@ class SearchEmployee extends SearchDelegate {
               elevation: 1,
               margin: const EdgeInsets.symmetric(vertical: 2),
               child: ListTile(
-                leading: CircleAvatar(
-                  radius: 20.0,
-                  backgroundImage: NetworkImage(snapshot.data![index].picture!),
-                  backgroundColor: Colors.transparent,
+                onTap: () {
+                  Get.to(EmployeeDocuments(), arguments: [
+                    snapshot.data![index].id!,
+                    snapshot.data![index].fullName!,
+                  ]);
+                },
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.network(snapshot.data![index].picture!,
+                      fit: BoxFit.cover),
                 ),
                 title: Text(snapshot.data![index].fullName!),
                 subtitle: Column(

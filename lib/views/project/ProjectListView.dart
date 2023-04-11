@@ -70,6 +70,12 @@ class _ProjectListState extends State<ProjectList> {
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   Text(
+                                    'Total Cost Without GST: ' +
+                                        snapshot.data![index]
+                                            .totalProjectCostWihtoutGST!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  Text(
                                     'Total Payment Received: ' +
                                         snapshot.data![index].paymentReceived!,
                                     style: TextStyle(color: Colors.black),
@@ -77,6 +83,20 @@ class _ProjectListState extends State<ProjectList> {
                                   Text(
                                     'Total Pending Payments: ' +
                                         snapshot.data![index].pendingPayments!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  Text(
+                                    'Budget Utilization Upto: ' +
+                                        snapshot
+                                            .data![index].latestInvoiceMonth! +
+                                        ' - ' +
+                                        snapshot
+                                            .data![index].budgetUtilization!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  Text(
+                                    'Physical Progress Upto: ' +
+                                        snapshot.data![index].projectProgress!,
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   SizedBox(

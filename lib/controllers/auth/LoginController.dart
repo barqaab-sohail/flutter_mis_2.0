@@ -96,7 +96,7 @@ class LoginController extends GetxController with BaseController {
       await prefs?.setStringList('permissions', loginUser.permissions ?? []);
       emailController.clear();
       passwordController.clear();
-      Get.to(() => DashBoardScreen());
+      Get.off(() => DashBoardScreen());
     } else {
       Get.back();
     }

@@ -565,14 +565,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "20.4.54"
-  syncfusion_flutter_gauges:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_gauges
-      sha256: "6b7a901a33345511080d74770dfcdc37d30a15667c73819932786b95b3ec2dfb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "20.4.54"
   syncfusion_flutter_pdf:
     dependency: transitive
     description:
@@ -758,5 +750,5 @@ packages:
     source: hosted
     version: "6.2.2"
 sdks:
-  dart: ">=2.19.0 <4.0.0"
+  dart: ">=2.19.0 <3.0.0"
   flutter: ">=3.3.0"
