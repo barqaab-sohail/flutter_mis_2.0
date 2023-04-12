@@ -48,6 +48,8 @@ dependencies:
   pie_chart: ^5.3.2
   fl_chart: ^0.61.0
   cached_network_image: ^3.2.3
+  hive:
+  hive_flutter:
   ##flutter_cached_pdfview: ^0.4.1
 
 dev_dependencies:

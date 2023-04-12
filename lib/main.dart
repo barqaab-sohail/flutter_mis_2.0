@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:first_project/views/dashboard/DashboardView.dart';
 import 'package:first_project/views/auth/LoginView.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
+  await Hive.initFlutter();
   runApp(MisApp());
 }
 

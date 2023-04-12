@@ -1,6 +1,7 @@
 import 'package:first_project/controllers/auth/LoginController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,6 +10,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen1State extends State<LoginScreen> {
+  bool isChecked = false;
+  late Box box1;
   final loginController = Get.put(LoginController());
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool passwordVisible = false;
@@ -17,6 +20,25 @@ class _LoginScreen1State extends State<LoginScreen> {
   void initState() {
     super.initState();
     passwordVisible = true;
+    createOpenBox();
+  }
+
+  void createOpenBox() async {
+    box1 = await Hive.openBox('logindata');
+    getdata();
+  }
+
+  void getdata() async {
+    if (box1.get('email') != null) {
+      loginController.emailController = box1.get('email');
+      isChecked = true;
+      setState(() {});
+    }
+    if (box1.get('pass') != null) {
+      loginController.passwordController = box1.get('pass');
+      isChecked = true;
+      setState(() {});
+    }
   }
 
   @override
@@ -99,6 +121,25 @@ class _LoginScreen1State extends State<LoginScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                Text(
+                                  "Remember Email and Password",
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                Checkbox(
+                                  value: isChecked,
+                                  onChanged: (value) {
+                                    isChecked = !isChecked;
+                                    setState(() {});
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
                                 ElevatedButton(
                                   style: ButtonStyle(
                                     foregroundColor:
@@ -106,6 +147,7 @@ class _LoginScreen1State extends State<LoginScreen> {
                                             Colors.black),
                                   ),
                                   onPressed: () {
+                                    login();
                                     loginController.checkLogin(
                                         formkey: _formKey);
                                   },
@@ -127,5 +169,12 @@ class _LoginScreen1State extends State<LoginScreen> {
                             )
                           ],
                         ))))));
+  }
+
+  void login() {
+    if (isChecked) {
+      box1.put('email', loginController.emailController.value.text);
+      box1.put('pass', loginController.passwordController.value.text);
+    }
   }
 }
