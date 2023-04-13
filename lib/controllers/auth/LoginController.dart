@@ -59,13 +59,12 @@ class LoginController extends GetxController with BaseController {
   }
 
   void checkLogin({@required formkey}) async {
-    showLoading('Please wait ...');
     final isValid = formkey.currentState!.validate();
     if (!isValid) {
       return;
     }
     formkey.currentState!.save();
-
+    showLoading('Please wait ...');
     Map body = {
       'email': emailController.text.trim(),
       'password': passwordController.text
@@ -168,6 +167,21 @@ class LoginController extends GetxController with BaseController {
   }
 
   static logout({String? email, String? authToken}) async {
+    Get.dialog(
+      Dialog(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 8),
+              Text('Please wait...'),
+            ],
+          ),
+        ),
+      ),
+    );
     final prefs = await SharedPreferences.getInstance();
     Map<String, String> requestHeaders = {
       'content-Type': 'application/json',
