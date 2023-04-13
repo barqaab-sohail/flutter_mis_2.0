@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:first_project/controllers/auth/UserPreferences.dart';
 import '../asset/AssetListView.dart';
 import '../dashboard/DashboardView.dart';
+import 'package:first_project/views/project/tables/power_projects_table.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({super.key});
@@ -112,7 +113,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
             title: const Text('Project Documents'),
             onTap: () {
               isAllowProjectDocuments
-                  ? Get.to(() => AllProjectDocumentsView())
+                  ? Get.to(
+                      () => PowerProjectsTable() //AllProjectDocumentsView()
+                      )
                   : unAuthorized();
               ;
             },
