@@ -42,4 +42,5 @@ class Routes {
   static const String ASSETS = "/asset_list";
   static const String PROJECTS = "/project_list";
   static const String ALL_PROJECTS_DOCUMENTS = "/all_projects_documents";
+  static const String LOGOUT = "/logout";
 }

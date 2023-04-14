@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controllers/project/ProjectDocumentController.dart';
 import '../../controllers/project/search/SearchProjectDocument.dart';
 import '../../model/project/ProjectDocumentModel.dart';
+import '../drawer/drawer_view_class.dart';
 import '../hr/pdf_viewer.dart';
 import '../hr/photo_viewer.dart';
 
@@ -16,6 +17,7 @@ class AllProjectDocumentsView extends StatefulWidget {
 }
 
 class _AllProjectDocumentsViewState extends State<AllProjectDocumentsView> {
+  DrawerViewClass drawerViewClass = DrawerViewClass();
   final projectDocumentController = Get.put(ProjectDocumentController());
 
   @override
@@ -39,6 +41,7 @@ class _AllProjectDocumentsViewState extends State<AllProjectDocumentsView> {
             )
           ],
         ),
+        drawer: Drawer(child: drawerViewClass.buildDrawer()),
         body: Column(children: [
           const SizedBox(
             height: 20,

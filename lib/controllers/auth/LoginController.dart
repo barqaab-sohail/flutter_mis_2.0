@@ -201,4 +201,12 @@ class LoginController extends GetxController with BaseController {
       Get.off(() => LoginScreen());
     }
   }
+
+  Widget getContent() {
+    return Column(
+      children: [
+        Text("Are you sure to logout"),
+      ],
+    );
+  }
 }

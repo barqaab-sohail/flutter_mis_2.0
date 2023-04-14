@@ -4,8 +4,9 @@ import 'package:first_project/views/project/charts/BudgetChart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/project/search/searchProject.dart';
-import '../drawer/DrawerView.dart';
 import 'package:first_project/views/project/ProjectDocumentsView.dart';
+
+import '../drawer/drawer_view_class.dart';
 
 class ProjectList extends StatefulWidget {
   const ProjectList({super.key});
@@ -15,6 +16,7 @@ class ProjectList extends StatefulWidget {
 }
 
 class _ProjectListState extends State<ProjectList> {
+  DrawerViewClass drawerViewClass = DrawerViewClass();
   final projectListController = Get.put(ProjectListController());
 
   @override
@@ -37,7 +39,7 @@ class _ProjectListState extends State<ProjectList> {
             )
           ],
         ),
-        drawer: HomeDrawer(),
+        drawer: Drawer(child: drawerViewClass.buildDrawer()),
         body: FutureBuilder<List<ProjectListModal>>(
           future: projectListController.ProjectList(),
           builder: (context, snapshot) {

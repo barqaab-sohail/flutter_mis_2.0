@@ -4,6 +4,7 @@ import 'package:first_project/model/asset/AssetModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../drawer/DrawerView.dart';
+import 'package:first_project/views/drawer/drawer_view_class.dart';
 
 class AssetList extends StatefulWidget {
   const AssetList({super.key});
@@ -13,6 +14,7 @@ class AssetList extends StatefulWidget {
 }
 
 class _AssetListState extends State<AssetList> {
+  DrawerViewClass drawerViewClass = DrawerViewClass();
   @override
   void initState() {
     super.initState();
@@ -39,7 +41,7 @@ class _AssetListState extends State<AssetList> {
             )
           ],
         ),
-        drawer: HomeDrawer(),
+        drawer: Drawer(child: drawerViewClass.buildDrawer()),
         body: Column(children: [
           const SizedBox(
             height: 20,

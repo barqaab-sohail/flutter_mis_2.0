@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../controllers/auth/LoginController.dart';
+
 class DrawerViewClass {
   bool isAllowAssets = false;
   bool isAllowHr = false;
@@ -54,7 +56,9 @@ class DrawerViewClass {
     if (route == "/dashboard") {
       return true;
     }
-
+    if (route == "/logout") {
+      return true;
+    }
     return false;
   }
 
@@ -148,7 +152,26 @@ class DrawerViewClass {
           ),
           onTap: () {
             if (checkAuth(menuItem.route)) {
-              Get.toNamed(menuItem.route);
+              if (menuItem.route == "/logout") {
+                Get.defaultDialog(
+                  title: "Confirmation",
+                  titleStyle: TextStyle(fontSize: 25),
+                  middleText: "Are you sure to logout",
+                  middleTextStyle: TextStyle(fontSize: 20),
+                  backgroundColor: Colors.white,
+                  textCancel: "Cancel",
+                  cancelTextColor: Colors.black,
+                  textConfirm: "Confirm",
+                  confirmTextColor: Colors.black,
+                  onCancel: () {},
+                  onConfirm: () {
+                    LoginController.logout(email: email, authToken: token);
+                  },
+                  buttonColor: Colors.blue,
+                );
+              } else {
+                Get.toNamed(menuItem.route);
+              }
             } else {
               unAuthorized();
             }
@@ -237,6 +260,13 @@ class DrawerViewClass {
           "route": "/asset_list",
         },
       ]
+    },
+    //menu data item
+    {
+      "level": 0,
+      "icon": Icons.space_dashboard,
+      "title": "Logout",
+      "route": "/logout",
     },
   ];
 }

@@ -8,8 +8,8 @@ import '../../model/project/ProjectDocumentModel.dart';
 
 class ProjectDocumentController extends GetxController {
   UserPreference userPreference = UserPreference();
-
-  List<ProjectDocumentModel> filterDocuments = [];
+  List<ProjectDocumentModel> allProjectDocuments = [];
+  List<ProjectDocumentModel> filterAllProjectDocuments = [];
   @override
   void onInit() {
     super.onInit();
@@ -52,6 +52,19 @@ class ProjectDocumentController extends GetxController {
 
   Future<List<ProjectDocumentModel>> getAllProjectDocuments(
       {String? query}) async {
+    if (allProjectDocuments.isNotEmpty) {
+      if (query != null) {
+        filterAllProjectDocuments = allProjectDocuments
+            .where((element) => element
+                .toJson()
+                .toString()
+                .toLowerCase()
+                .contains((query.toLowerCase())))
+            .toList();
+        return filterAllProjectDocuments;
+      }
+      return allProjectDocuments;
+    }
     SharedPreferences sp = await SharedPreferences.getInstance();
     var token = sp.getString('token') ?? '';
 
@@ -64,11 +77,12 @@ class ProjectDocumentController extends GetxController {
     http.Response response = await http.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       Iterable responseData = jsonDecode(response.body);
-      List<ProjectDocumentModel> projectDocuments =
-          List<ProjectDocumentModel>.from(responseData
-              .map((model) => ProjectDocumentModel.fromJson(model))).toList();
+      allProjectDocuments = List<ProjectDocumentModel>.from(
+              responseData.map((model) => ProjectDocumentModel.fromJson(model)))
+          .toList();
+
       if (query != null) {
-        projectDocuments = projectDocuments
+        allProjectDocuments = allProjectDocuments
             .where((element) => element
                 .toJson()
                 .toString()
@@ -76,7 +90,7 @@ class ProjectDocumentController extends GetxController {
                 .contains((query.toLowerCase())))
             .toList();
       }
-      return projectDocuments;
+      return allProjectDocuments;
     } else {
       throw jsonDecode(response.body)["message"] ?? "Unknown Error Occured";
     }

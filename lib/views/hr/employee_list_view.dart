@@ -3,6 +3,7 @@ import 'package:first_project/controllers/hr/SearchEmployee.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../drawer/DrawerView.dart';
+import 'package:first_project/views/drawer/drawer_view_class.dart';
 
 class EmployeeList extends StatefulWidget {
   const EmployeeList({super.key});
@@ -13,7 +14,7 @@ class EmployeeList extends StatefulWidget {
 
 class _EmployeeListState extends State<EmployeeList> {
   // Timer? timer;
-
+  DrawerViewClass drawerViewClass = DrawerViewClass();
   @override
   void initState() {
     super.initState();
@@ -44,7 +45,7 @@ class _EmployeeListState extends State<EmployeeList> {
             )
           ],
         ),
-        drawer: HomeDrawer(),
+        drawer: Drawer(child: drawerViewClass.buildDrawer()),
         body: Column(children: [
           const SizedBox(
             height: 20,
