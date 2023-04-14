@@ -2,6 +2,7 @@ import 'package:first_project/controllers/dashboard/DashboardController.dart';
 import 'package:first_project/views/drawer/DrawerView.dart';
 import 'package:flutter/material.dart';
 import '../../controllers/auth/UserPreferences.dart';
+import 'package:first_project/views/drawer/drawer_view_class.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -22,6 +23,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     var user = DashboardController.getUser();
+    DrawerViewClass drawerViewClass = DrawerViewClass();
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -35,7 +37,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           //       icon: Icon(Icons.logout))
           // ],
         ),
-        drawer: HomeDrawer(),
+        drawer: Drawer(child: drawerViewClass.buildDrawer()),
         body: Column(
           children: [],
         ));

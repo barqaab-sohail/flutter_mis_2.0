@@ -1,5 +1,6 @@
 import 'package:first_project/main.dart';
 import 'package:first_project/views/asset/AssetListView.dart';
+import 'package:first_project/views/project_documents/AllProjectDocumentsView.dart';
 import 'package:get/get.dart';
 import 'package:first_project/binding/Binding.dart';
 import 'package:first_project/views/dashboard/DashboardView.dart';
@@ -27,6 +28,10 @@ class AppPages {
         name: Routes.ASSETS,
         page: () => AssetList(),
         binding: InitialBinding()),
+    GetPage(
+        name: Routes.ALL_PROJECTS_DOCUMENTS,
+        page: () => AllProjectDocumentsView(),
+        binding: InitialBinding()),
   ];
 }
 
@@ -36,4 +41,5 @@ class Routes {
   static const String HR = "/employee_list";
   static const String ASSETS = "/asset_list";
   static const String PROJECTS = "/project_list";
+  static const String ALL_PROJECTS_DOCUMENTS = "/all_projects_documents";
 }
