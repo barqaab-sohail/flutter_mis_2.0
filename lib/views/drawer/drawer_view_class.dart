@@ -264,7 +264,7 @@ class DrawerViewClass {
     //menu data item
     {
       "level": 0,
-      "icon": Icons.space_dashboard,
+      "icon": Icons.logout_outlined,
       "title": "Logout",
       "route": "/logout",
     },
