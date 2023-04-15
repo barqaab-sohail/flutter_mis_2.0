@@ -126,7 +126,7 @@ class DrawerViewClass {
     if (menuItem.level == 1) {
       lp = 10;
       fontSize = 14;
-      iconColor = Colors.red;
+      iconColor = Colors.green;
     }
     if (menuItem.level == 2) {
       lp = 20;
