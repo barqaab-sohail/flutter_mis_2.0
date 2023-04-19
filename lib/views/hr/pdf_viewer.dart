@@ -1,7 +1,8 @@
 import 'dart:io';
-
+import 'package:first_project/helper/unauthorized.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:first_project/utils/api/BaseAPI.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,25 +21,33 @@ class PdfViewer extends StatefulWidget {
 }
 
 class _PdfViewerState extends State<PdfViewer> {
+  bool isShareAllowed = false;
+
+  loadUserData() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    List<String> permissions = sp.getStringList('permissions')!;
+    isShareAllowed = permissions.contains('mis share doc');
+  }
+
   String fileName = '';
   String path = '';
   @override
   void initState() {
     super.initState();
-
+    loadUserData();
     //getPdf();
   }
 
-  getPdf() async {
-    fileName = Get.arguments[1];
-    final UrlImage = StoragePoint.storage + Get.arguments[0];
-    final url = Uri.parse(UrlImage);
-    final response = await http.get(url);
-    final bytes = response.bodyBytes;
-    final temp = await getTemporaryDirectory();
-    path = '${temp.path}/${fileName}.pdf';
-    File(path).writeAsBytesSync(bytes);
-  }
+  // getPdf() async {
+  //   fileName = Get.arguments[1];
+  //   final UrlImage = StoragePoint.storage + Get.arguments[0];
+  //   final url = Uri.parse(UrlImage);
+  //   final response = await http.get(url);
+  //   final bytes = response.bodyBytes;
+  //   final temp = await getTemporaryDirectory();
+  //   path = '${temp.path}/${fileName}.pdf';
+  //   File(path).writeAsBytesSync(bytes);
+  // }
 
   showLoading([String? message]) {
     DialogHelper.showLoading(message);
@@ -76,18 +85,21 @@ class _PdfViewerState extends State<PdfViewer> {
           actions: [
             IconButton(
               onPressed: () async {
-                // String fileName = Get.arguments[1];
-                // final UrlImage = StoragePoint.storage + Get.arguments[0];
-                // showLoading('Please wait ...');
-                // // final url = Uri.parse(UrlImage);
-                // // final response = await http.get(url);
-                // // final bytes = response.bodyBytes;
-                // // final temp = await getTemporaryDirectory();
-                // // final path = '${temp.path}/${fileName}.pdf';
-                // // print(path);
-                // File(path).writeAsBytesSync(bytes);
-                // hideLoading();
-                await Share.shareFiles([path], text: fileName);
+                isShareAllowed
+                    ?
+                    // String fileName = Get.arguments[1];
+                    // final UrlImage = StoragePoint.storage + Get.arguments[0];
+                    // showLoading('Please wait ...');
+                    // // final url = Uri.parse(UrlImage);
+                    // // final response = await http.get(url);
+                    // // final bytes = response.bodyBytes;
+                    // // final temp = await getTemporaryDirectory();
+                    // // final path = '${temp.path}/${fileName}.pdf';
+                    // // print(path);
+                    // File(path).writeAsBytesSync(bytes);
+                    // hideLoading();
+                    await Share.shareFiles([path], text: fileName)
+                    : UnAuthorized.authError();
               },
               icon: Icon(Icons.share),
             )
