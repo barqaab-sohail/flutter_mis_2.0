@@ -250,12 +250,12 @@ class DrawerViewClass {
     //menu data item
     {
       "level": 0,
-      "icon": Icons.account_circle,
+      "icon": Icons.money_outlined,
       "title": "Asset",
       "children": [
         {
           "level": 1,
-          "icon": Icons.account_box,
+          "icon": Icons.money_outlined,
           "title": "Asset List",
           "route": "/asset_list",
         },

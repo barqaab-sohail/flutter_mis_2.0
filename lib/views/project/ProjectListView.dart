@@ -59,35 +59,35 @@ class _ProjectListState extends State<ProjectList> {
                           ),
                           child: ListTile(
                             // leading: CircleAvatar(child: Icon(Icons.add)),
-                            title: Text(
+                            title: SelectableText(
                               snapshot.data![index].projectName!,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  SelectableText(
                                     'Project Type: ' +
                                         snapshot.data![index].projectType!,
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                  Text(
+                                  SelectableText(
                                     'Total Cost Without GST: ' +
                                         snapshot.data![index]
                                             .totalProjectCostWihtoutGST!,
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                  Text(
+                                  SelectableText(
                                     'Total Payment Received: ' +
                                         snapshot.data![index].paymentReceived!,
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                  Text(
+                                  SelectableText(
                                     'Total Pending Payments: ' +
                                         snapshot.data![index].pendingPayments!,
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                  Text(
+                                  SelectableText(
                                     'Budget Utilization Upto: ' +
                                         snapshot
                                             .data![index].latestInvoiceMonth! +
@@ -96,7 +96,7 @@ class _ProjectListState extends State<ProjectList> {
                                             .data![index].budgetUtilization!,
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                  Text(
+                                  SelectableText(
                                     'Physical Progress Upto: ' +
                                         snapshot.data![index].projectProgress!,
                                     style: TextStyle(color: Colors.black),

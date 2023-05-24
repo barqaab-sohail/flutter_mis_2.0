@@ -111,6 +111,11 @@ class _PdfViewerState extends State<PdfViewer> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return SfPdfViewer.file(snapshot.data!);
+                    //SfPdfViewer.network(
+                    // 'https://hrms.barqaab.pk/storage/project/96/contract_agreement-1677653796.pdf');
+                    //SfPdfViewer.asset('assets/images/contract.pdf');
+
+                    //
                   }
                   return Center(child: const CircularProgressIndicator());
                 })
