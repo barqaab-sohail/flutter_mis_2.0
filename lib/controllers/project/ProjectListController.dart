@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../model/project/ProjectLedgerActivityModel.dart';
+import '../../services/app_exceptions.dart';
 
 class ProjectListController extends GetxController {
   List<ProjectListModal> _projects = [];

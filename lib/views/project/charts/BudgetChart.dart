@@ -109,7 +109,7 @@ class _BudgetChartState extends State<BudgetChart> {
                           dataMap["Budget Utilization"] != 0.0) {
                         return PieChart(
                           dataMap: dataMap,
-                          centerText: 'Budget Utilization Chart',
+                          // centerText: 'Budget Utilization Chart',
                           chartRadius: MediaQuery.of(context).size.width / 1.7,
                           legendOptions: LegendOptions(
                             showLegendsInRow: false,
