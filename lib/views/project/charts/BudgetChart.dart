@@ -29,6 +29,7 @@ class _BudgetChartState extends State<BudgetChart> {
   final projectListController = Get.find<ProjectListController>();
 
   Map<String, double> dataMap = {};
+  String lastUpdate = '';
 
   Future<Map<String, double>> getChartData() async {
     BudgetChartModel data = await projectListController.getProejctChart(
@@ -46,14 +47,14 @@ class _BudgetChartState extends State<BudgetChart> {
       getProjectLedgerActivty() async {
     ProjectLedgerActivityModel data = await projectListController
         .getProjectLedgerActivty(id: Get.arguments[0].toString());
-
+    lastUpdate = data.lastUpdate ?? '';
     List<BarChartModel> data1 = [
       BarChartModel(
           description: "Total Cost",
           value: data.projectCost!,
           color: charts.ColorUtil.fromDartColor(Colors.blueGrey)),
       BarChartModel(
-          description: "Invoices",
+          description: "Invoices ",
           value: data.totalDebit!,
           color: charts.ColorUtil.fromDartColor(Colors.red)),
       BarChartModel(
