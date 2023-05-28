@@ -76,7 +76,7 @@ class _ProjectDocumentState extends State<ProjectDocument> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Document Date: ' +
-                              snapshot.data![index].extension!),
+                              snapshot.data![index].documentDate!),
                           Text('Extension Type: ' +
                               snapshot.data![index].extension!),
                           Text('File Szie : ' + snapshot.data![index].size!),
