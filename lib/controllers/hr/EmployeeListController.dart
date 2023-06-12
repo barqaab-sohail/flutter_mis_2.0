@@ -51,9 +51,11 @@ class EmployeListController extends GetxController {
                     Text('Employee No: ' + snapshot.data![index].employeeNo!),
                     Text(
                         'Date of Birth: ' + snapshot.data![index].dateOfBirth!),
+                    Text('Age: ' + snapshot.data![index].age!),
                     Text('Date of Joining: ' +
                         snapshot.data![index].dateOfJoining!),
                     Text('Mobile: ' + snapshot.data![index].mobile!),
+                    Text('Blood Group: ' + snapshot.data![index].bloodGroup!),
                     Text('Current Status: ' + snapshot.data![index].status!),
                   ],
                 ),
