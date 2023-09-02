@@ -1,6 +1,8 @@
 class ProjectListModal {
   int? id;
   String? projectNo;
+  String? commencementDate;
+  String? completionDate;
   String? projectType;
   String? projectName;
   String? totalProjectCostWihtoutGST;
@@ -15,6 +17,8 @@ class ProjectListModal {
   ProjectListModal(
       {this.id,
       this.projectNo,
+      this.commencementDate,
+      this.completionDate,
       this.projectType,
       this.projectName,
       this.totalProjectCostWihtoutGST,
@@ -29,6 +33,8 @@ class ProjectListModal {
   ProjectListModal.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     projectNo = json['projectNo'];
+    commencementDate = json['commencementDate'];
+    completionDate = json['completionDate'];
     projectType = json['projectType'];
     projectName = json['projectName'];
     totalProjectCostWihtoutGST = json['totalProjectCostWihtoutGST'];
@@ -45,6 +51,8 @@ class ProjectListModal {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['projectNo'] = this.projectNo;
+    data['commencementDate'] = this.commencementDate;
+    data['completionDate'] = this.completionDate;
     data['projectType'] = this.projectType;
     data['projectName'] = this.projectName;
     data['totalProjectCostWihtoutGST'] = this.totalProjectCostWihtoutGST;

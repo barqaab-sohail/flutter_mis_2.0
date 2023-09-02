@@ -67,6 +67,16 @@ class _ProjectListState extends State<ProjectList> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SelectableText(
+                                    'Commencement Date: ' +
+                                        snapshot.data![index].commencementDate!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  SelectableText(
+                                    'Completion Date: ' +
+                                        snapshot.data![index].completionDate!,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  SelectableText(
                                     'Project Type: ' +
                                         snapshot.data![index].projectType!,
                                     style: TextStyle(color: Colors.black),
@@ -112,6 +122,10 @@ class _ProjectListState extends State<ProjectList> {
                                               snapshot.data![index].id!,
                                               snapshot
                                                   .data![index].projectName!,
+                                              snapshot.data![index]
+                                                  .latestInvoiceMonth!,
+                                              snapshot.data![index]
+                                                  .latestPaymentMonth!,
                                             ]);
                                           },
                                           child: Text('Project Charts')),
@@ -125,6 +139,10 @@ class _ProjectListState extends State<ProjectList> {
                                                   snapshot.data![index].id!,
                                                   snapshot.data![index]
                                                       .projectName!,
+                                                  snapshot.data![index]
+                                                      .latestInvoiceMonth!,
+                                                  snapshot.data![index]
+                                                      .latestPaymentMonth!,
                                                 ]);
                                           },
                                           child: Text('Project Documents'))

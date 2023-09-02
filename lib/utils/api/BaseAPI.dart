@@ -1,6 +1,10 @@
 class BaseAPI {
   static final String url = "http://192.168.1.10/";
-  //"https://barqaab.pk/;
+  //"https://barqaab.pk/";
+  //
+
+  //"http://192.168.1.10/";
+  //
 
   static final String baseURL = url + "hrms/public/api/";
   //"https://barqaab.pk/hrms/public/api/";

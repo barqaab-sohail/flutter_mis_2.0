@@ -64,10 +64,16 @@ class _PdfViewerState extends State<PdfViewer> {
   }
 
   Future<File> getPdfFile() async {
+    Map<String, String> requestHeaders = {
+      'Origin': 'http://localhost',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept'
+    };
     String fileName = Get.arguments[1];
     final UrlImage = StoragePoint.storage + Get.arguments[0];
     final url = Uri.parse(UrlImage);
-    final response = await http.get(url);
+    final response = await http.get(url, headers: requestHeaders);
     final bytes = response.bodyBytes;
     final temp = await getTemporaryDirectory();
     path = '${temp.path}/${fileName}.pdf';
@@ -110,7 +116,8 @@ class _PdfViewerState extends State<PdfViewer> {
                 future: getPdfFile(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return SfPdfViewer.file(snapshot.data!);
+                    return pdfView();
+                    //SfPdfViewer.file(snapshot.data!);
                     //SfPdfViewer.network(
                     // 'https://hrms.barqaab.pk/storage/project/96/contract_agreement-1677653796.pdf');
                     //SfPdfViewer.asset('assets/images/contract.pdf');

@@ -26,6 +26,8 @@ class EmployeeDocumentController extends GetxController {
 
     Map<String, String> requestHeaders = {
       'Content-type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, DELETE, HEAD, OPTIONS',
       'Authorization': 'Bearer ' + token
     };
     var url = Uri.parse(BaseAPI.baseURL + EndPoints.employeeDocuments + id);

@@ -29,15 +29,17 @@ class _BudgetChartState extends State<BudgetChart> {
   final projectListController = Get.find<ProjectListController>();
 
   Map<String, double> dataMap = {};
-  String lastUpdate = '';
+  String lastUpdate = "";
 
   Future<Map<String, double>> getChartData() async {
     BudgetChartModel data = await projectListController.getProejctChart(
         id: Get.arguments[0].toString());
+
     dataMap = {
       "Budget Used": double.parse(data.budgetUtilization!),
       "Remaining Budget": double.parse(data.remainingBudget!),
     };
+
     return dataMap;
   }
 
@@ -47,7 +49,6 @@ class _BudgetChartState extends State<BudgetChart> {
       getProjectLedgerActivty() async {
     ProjectLedgerActivityModel data = await projectListController
         .getProjectLedgerActivty(id: Get.arguments[0].toString());
-    lastUpdate = data.lastUpdate ?? '';
     List<BarChartModel> data1 = [
       BarChartModel(
           description: "Total Cost",
@@ -95,7 +96,7 @@ class _BudgetChartState extends State<BudgetChart> {
             children: [
               SizedBox(height: 20),
               Text(
-                "Budget Utilization Chart",
+                "Budget Utilization Chart \nLast Invoice " + Get.arguments[2]!,
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.black,
@@ -133,7 +134,10 @@ class _BudgetChartState extends State<BudgetChart> {
               SizedBox(height: 20),
               //Bar Chart
               Text(
-                "Invoices Status  Chart",
+                "Invoices Status  Chart \nLast Invoice " +
+                    Get.arguments[2]! +
+                    "\nLast Payment " +
+                    Get.arguments[3]!,
                 style: TextStyle(
                     fontSize: 20,
                     color: Colors.black,
